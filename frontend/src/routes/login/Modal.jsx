@@ -17,7 +17,7 @@ export default function Modal(props) {
   return (
     <React.Fragment>
       <div onClick={() => props.setShow(false)} className="dim" />
-      <div className="modal-container">{props.children}</div>
+      <div className="dim modal-container">{props.children}</div>
     </React.Fragment>
   );
 }

@@ -9,14 +9,8 @@
 }
 
 .modal-container {
-  position: fixed;
   background-color: white;
   max-width: 800px;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
-  width: 100%;
   max-height: 375px;
   margin: auto;
   border-radius: 20px;
