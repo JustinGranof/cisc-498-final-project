@@ -15,7 +15,7 @@ export default function Login(props) {
           <h2>Queen's Rapid Response Tool</h2>
         </div>
         <div className="login-body-container">
-          <form className="login-form">
+          <form onSubmit={(e) => e.preventDefault()} className="login-form">
             <label htmlFor="email">Username or Email</label>
             <input
               style={{ marginBottom: "20px" }}
@@ -31,13 +31,16 @@ export default function Login(props) {
               className="login-input"
               type="password"
             />
+            <p>
+              Having trouble logging in? <a href="#">Contact support.</a>
+            </p>
+            <p>
+              Forgot your password? Click <a href="#">here</a>.
+            </p>
+            <button style={{ marginTop: "20px" }} className="primary-btn">
+              Login
+            </button>
           </form>
-          <p>
-            Having trouble logging in? <a>Contact support.</a>
-          </p>
-          <p>
-            Forgot your password? Click <a>here</a>.
-          </p>
         </div>
       </div>
     </React.Fragment>
