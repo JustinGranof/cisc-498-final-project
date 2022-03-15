@@ -1,24 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Login from "./routes/login/Login";
+import Reset from "./routes/login/Reset";
+
+// React Router imports
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+
+export function useAuthStatus() {
+  const [auth, setAuth] = useState(false);
+
+  // on mount
+  useEffect(() => {
+    // add listener for storage change
+    window.addEventListener("storage", checkAuth);
+
+    checkAuth();
+
+    return () => {
+      window.removeEventListener("storage", checkAuth);
+    };
+  }, []);
+
+  function checkAuth() {
+    // check local storage
+    const user = window.localStorage.getItem("user");
+    console.log(user);
+    if (!user || !user.token) return setAuth(false);
+    // user has token
+    // TODO check token with backend
+  }
+
+  // check user authentication status
+  // if no token, auth is false
+  // if token check with backend for result
+
+  return auth;
+}
 
 function App() {
+  const auth = useAuthStatus();
+
+  console.log(auth);
+
+  // component did mount
+  useEffect(() => {}, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {!auth ? (
+        /* Login Flow */
+        <>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/reset-password" element={<Reset />} />
+            <Route path="*" element={<Navigate to="/login" />} />
+          </Routes>
+        </>
+      ) : (
+        /* App Flow*/
+        <></>
+      )}
+    </Router>
   );
 }
 
