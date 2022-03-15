@@ -6,13 +6,23 @@ import "./login.css";
 // Image imports
 import Logo from "../../img/queens_logo.png";
 import { Link } from "react-router-dom";
+import request from "../../utils/Request";
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
-  function login() {
+  async function login() {
     // make a login request to backend
+    const data = await request("POST", "auth/login", {
+      email: email,
+      password: pass,
+    });
+
+    if (data.token) {
+      console.log(data.token);
+      // TODO save the token
+    }
   }
 
   return (

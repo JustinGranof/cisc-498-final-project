@@ -36,12 +36,10 @@ export function useAuthStatus() {
     // user has token
     console.log(user);
     // verify token with backend
-    let data = await request("POST", "authenticate", {}, user.token).catch(
-      () => {
-        // token could not be verified
-        setAuth(false);
-      }
-    );
+    let data = await request("POST", "auth", {}, user.token).catch(() => {
+      // token could not be verified
+      setAuth(false);
+    });
     if (!data) return setAuth(false);
     console.log("DATA:", data);
   }
