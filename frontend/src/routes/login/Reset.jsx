@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Logo from "../../img/queens_logo.png";
 
@@ -24,7 +25,7 @@ export default function Reset(props) {
               style={{ marginBottom: "30px" }}
             />
             <p>
-              <a href="#">Return to login</a>
+              <Link to="/login">Return to login</Link>
             </p>
             <button style={{ marginTop: "20px" }} className="primary-btn">
               Send reset email

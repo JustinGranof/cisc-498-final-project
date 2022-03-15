@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 // CSS imports
 import "./login.css";
 
 // Image imports
 import Logo from "../../img/queens_logo.png";
+import { Link } from "react-router-dom";
 
 export default function Login(props) {
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+
+  function login() {
+    // make a login request to backend
+  }
+
   return (
     <React.Fragment>
       <div className="login-container">
@@ -15,9 +23,17 @@ export default function Login(props) {
           <h2>Queen's Rapid Response Tool</h2>
         </div>
         <div className="login-body-container">
-          <form onSubmit={(e) => e.preventDefault()} className="login-form">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              login();
+            }}
+            className="login-form"
+          >
             <label htmlFor="email">Username or Email</label>
             <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               style={{ marginBottom: "20px" }}
               placeholder="Enter your username or email..."
               id="email"
@@ -25,6 +41,8 @@ export default function Login(props) {
             />
             <label htmlFor="password">Password</label>
             <input
+              value={pass}
+              onChange={(e) => setPass(e.target.vlaue)}
               style={{ marginBottom: "10px" }}
               placeholder="Enter your password..."
               id="password"
@@ -35,9 +53,14 @@ export default function Login(props) {
               Having trouble logging in? <a href="#">Contact support.</a>
             </p>
             <p>
-              Forgot your password? Click <a href="#">here</a>.
+              Forgot your password? Click <Link to="/reset-password">here</Link>
+              .
             </p>
-            <button style={{ marginTop: "20px" }} className="primary-btn">
+            <button
+              type="submit"
+              style={{ marginTop: "20px" }}
+              className="primary-btn"
+            >
               Login
             </button>
           </form>
