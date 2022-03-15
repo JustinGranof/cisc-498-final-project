@@ -16,7 +16,7 @@ class Users extends mongoDbClass {
         console.log(user);
 
         if (user == null){
-            return {'error': true, 'body': 'Email does not exist.'};
+            return {'error': true, 'body': 'Invalid Credentials.'};
         }
         else {
             //Compares the password to the hash in the database to see if it is correct
@@ -29,15 +29,11 @@ class Users extends mongoDbClass {
                 return {'error': false, 'body': returnData};
             }
             else {
-                return {'error': true, 'body': 'Incorrect password.'}; // Might want to make error messages generic so a bad actor gets less information
+                return {'error': true, 'body': 'Invalid Crendentials.'};
             }
             
           
         }
-
-       
-
-        
 
     }
 

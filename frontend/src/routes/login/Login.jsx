@@ -16,7 +16,7 @@ export default function Login(props) {
     // make a login request to backend
     const data = await request("POST", "auth/login", {
       email: email,
-      password: pass,
+      password: pass
     });
 
     if (data.token) {
@@ -52,7 +52,7 @@ export default function Login(props) {
             <label htmlFor="password">Password</label>
             <input
               value={pass}
-              onChange={(e) => setPass(e.target.vlaue)}
+              onChange={(e) => setPass(e.target.value)}
               style={{ marginBottom: "10px" }}
               placeholder="Enter your password..."
               id="password"

@@ -8,11 +8,15 @@ const jwt = require("jsonwebtoken");
 router.post("/login", async (req, res) => {
   console.log("Trying to login.");
   //These must be sent through the post request
-  var email = "test@super.com";
-  var password = "1234";
+  // var email = "test@super.com";
+  // var password = "1234";
 
+  var email = req.body.email;
+  var password = req.body.password;
+
+  console.log(req.body);
   //Initialize connection to database
-  /*let User = new Users();
+  let User = new Users();
 
   var connectStatus = User.connect();
   if (connectStatus == false) {
@@ -20,11 +24,12 @@ router.post("/login", async (req, res) => {
     return; //Not sure if this actually stops execution but that is the goal
   }
 
-  var login = await User.login(email, password);*/
+  var login = await User.login(email, password);
 
-  let login = { error: false, body: { email: email } };
+  //let login = { error: false, body: { email: email } };
 
   if (login["error"] != false) {
+    res.send({ success: false, body: login['body'] });
     //errorMessage(res, login["body"]);
     return;
   } else {
@@ -34,7 +39,7 @@ router.post("/login", async (req, res) => {
       expiresIn: "30m",
     });
     console.log(token);
-    res.send({ ...login["body"], token: token });
+    res.send({ success: true, body: {...login["body"], token: token }});
     //successfulResponse(res, login["body"]);
   }
 });
