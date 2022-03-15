@@ -26,21 +26,18 @@ router.post("/login", async (req, res) => {
 
   var login = await User.login(email, password);
 
-  //let login = { error: false, body: { email: email } };
-
   if (login["error"] != false) {
-    res.send({ success: false, body: login['body'] });
-    //errorMessage(res, login["body"]);
-    return;
+    return res.send({ success: false, body: login["body"] });
   } else {
     //Should return full user info
     let data = { date: Date.now() };
     const token = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "30m",
     });
-    console.log(token);
-    res.send({ success: true, body: {...login["body"], token: token }});
-    //successfulResponse(res, login["body"]);
+    return res.send({
+      success: true,
+      body: { ...login["body"], token: token },
+    });
   }
 });
 

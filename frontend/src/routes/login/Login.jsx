@@ -11,17 +11,25 @@ import request from "../../utils/Request";
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [error, setError] = useState();
 
   async function login() {
     // make a login request to backend
     const data = await request("POST", "auth/login", {
       email: email,
-      password: pass
+      password: pass,
     });
 
-    if (data.token) {
-      console.log(data.token);
-      // TODO save the token
+    if (data.success && data.body.token) {
+      // Save any other information needed on frontend here
+      window.localStorage.setItem(
+        "user",
+        JSON.stringify({ token: data.body.token })
+      );
+      window.dispatchEvent(new Event("storage"));
+    } else {
+      // login failed
+      setError(data.body);
     }
   }
 
@@ -66,6 +74,9 @@ export default function Login(props) {
               Forgot your password? Click <Link to="/reset-password">here</Link>
               .
             </p>
+            {error && typeof error === "string" && (
+              <p style={{ color: "red" }}>Error: {error}</p>
+            )}
             <button
               type="submit"
               style={{ marginTop: "20px" }}

@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import request from "./utils/Request";
 
 export function useAuthStatus() {
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState();
 
   // on mount
   useEffect(() => {
@@ -33,15 +33,15 @@ export function useAuthStatus() {
     let user = window.localStorage.getItem("user");
     if (!user || !JSON.parse(user).token) return setAuth(false);
     user = JSON.parse(user);
-    // user has token
-    console.log(user);
-    // verify token with backend
+    // user has token, verify token with backend
     let data = await request("POST", "auth", {}, user.token).catch(() => {
       // token could not be verified
       setAuth(false);
     });
     if (!data) return setAuth(false);
-    console.log("DATA:", data);
+    if (data.success) {
+      setAuth(true);
+    }
   }
 
   // check user authentication status
@@ -54,10 +54,12 @@ export function useAuthStatus() {
 function App() {
   const auth = useAuthStatus();
 
-  console.log(auth);
+  console.log("Authenticated:", auth === undefined ? "Loading..." : auth);
 
   // component did mount
   useEffect(() => {}, []);
+
+  if (auth === undefined) return null;
 
   return (
     <Router>
@@ -73,7 +75,23 @@ function App() {
       ) : (
         /* App Flow*/
         <>
-          <button style={{ margin: "50px 50px" }}>Sign Out</button>
+          <Routes>
+            <Route
+              path="*"
+              element={
+                <button
+                  onClick={() => {
+                    window.localStorage.removeItem("user");
+                    window.dispatchEvent(new Event("storage"));
+                  }}
+                  style={{ margin: "50px 50px" }}
+                >
+                  Sign Out
+                </button>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
         </>
       )}
     </Router>
