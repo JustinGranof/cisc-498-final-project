@@ -11,6 +11,8 @@ import {
 } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
+import request from "./utils/Request";
+
 export function useAuthStatus() {
   const [auth, setAuth] = useState(false);
 
@@ -26,13 +28,22 @@ export function useAuthStatus() {
     };
   }, []);
 
-  function checkAuth() {
+  async function checkAuth() {
     // check local storage
-    const user = window.localStorage.getItem("user");
-    console.log(user);
-    if (!user || !user.token) return setAuth(false);
+    let user = window.localStorage.getItem("user");
+    if (!user || !JSON.parse(user).token) return setAuth(false);
+    user = JSON.parse(user);
     // user has token
-    // TODO check token with backend
+    console.log(user);
+    // verify token with backend
+    let data = await request("POST", "authenticate", {}, user.token).catch(
+      () => {
+        // token could not be verified
+        setAuth(false);
+      }
+    );
+    if (!data) return setAuth(false);
+    console.log("DATA:", data);
   }
 
   // check user authentication status
@@ -63,7 +74,9 @@ function App() {
         </>
       ) : (
         /* App Flow*/
-        <></>
+        <>
+          <button style={{ margin: "50px 50px" }}>Sign Out</button>
+        </>
       )}
     </Router>
   );

@@ -10,8 +10,13 @@ export default async function request(
   method = "GET",
   path = "",
   body = {},
+  authToken,
   headers = { "Content-Type": "application/json" }
 ) {
+  if (authToken) {
+    headers["Authorization"] = "Bearer " + authToken;
+  }
+
   let data = (
     await fetch(process.env.REACT_APP_BACKEND_IP + "/" + path, {
       method: method,
