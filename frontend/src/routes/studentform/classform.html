@@ -1,0 +1,79 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <title>Rapid Respoonse Form | SocialApe</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Queen's Rapid Response Form</h1>
+      <div class="row">
+        <form class="col s6" id="myForm" novalidate>
+          <div class="row">
+            <div class="input-field col s6">
+              <label for="firstName">First Name</label>
+              <input
+                type="text"
+                name="First Name"
+                id="firstName"
+                onfocusout="validateFirstName()"
+              />
+              <span class="helper-text"></span>
+            </div>
+            <div class="input-field col s6">
+              <label for="lastName">Last Name</label>
+              <input
+                type="text"
+                name="Last Name"
+                id="lastName"
+                onfocusout="validateLastName()"
+              />
+              <span class="helper-text"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <label for="Contact Information">contact_info</label>
+              <input
+                type="contact_info"
+                name="contact_info"
+                id="contact_info"
+                onfocusout="validateContact()"
+              />
+              <span class="helper-text"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <label for="Medical Information">med_info</label>
+              <input
+                type="med_info"
+                name="med_info"
+                id="med_indo"
+                onfocusout="validateMed()"
+              />
+              <span class="helper-text"></span>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light" type="submit">
+            Submit
+          </button>
+        </form>
+        <div class="col s6">
+          <img
+            src="https://raw.githubusercontent.com/JustinGranof/cisc-498-final-project/classes-overview/frontend/src/img/queens_logo.png?token=GHSAT0AAAAAABQVV5E34FXDFTJT7NND6B2OYR3L4UQ"
+            style="width: 100%; border-radius: 6px; opacity: 0.85;"
+          />
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
