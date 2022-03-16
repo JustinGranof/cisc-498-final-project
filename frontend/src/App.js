@@ -44,10 +44,6 @@ export function useAuthStatus() {
     }
   }
 
-  // check user authentication status
-  // if no token, auth is false
-  // if token check with backend for result
-
   return auth;
 }
 
