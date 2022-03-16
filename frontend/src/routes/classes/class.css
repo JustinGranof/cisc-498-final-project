@@ -1,0 +1,73 @@
+.nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.classes-container {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 5vh;
+  }
+
+.join-btn {
+      background-color: #00305E;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      outline: none;
+      border-radius: 7px;
+  }
+
+.join-btn:hover {
+    cursor: pointer;
+    filter: brightness(1.5);
+}
+
+.header-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.student-table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 15px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.search-bar {
+    background-color: #F2F2F2;
+    outline: black;
+    border-width: 1px;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+}
+
+.table-container {
+    padding-bottom: 100px;
+}
+
+.delete-btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.delete-btn:hover {
+    cursor: pointer;
+}

@@ -1,13 +1,15 @@
 import "./App.css";
 import Login from "./routes/login/Login";
 import Reset from "./routes/login/Reset";
+import ClassList from "./routes/classes/classesList"
+import Class from "./routes/classes/class"
 
 // React Router imports
 import {
   BrowserRouter as Router,
   Navigate,
   Route,
-  Routes,
+  Routes
 } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
@@ -66,6 +68,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/reset-password" element={<Reset />} />
             <Route path="*" element={<Navigate to="/login" />} />
+            <Route path="/classes" element={<ClassList />} />
+            <Route path="/class" element={<Class />} />
           </Routes>
         </>
       ) : (
