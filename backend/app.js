@@ -75,4 +75,6 @@ app.get("/createTestUser", (req, res) => {
   res.send("Hello World");
 });
 
-app.listen(PORT, () => console.log("Server listening at port 3001"));
+app.listen(PORT, () => {
+  console.log("Server listening at port 3001");
+});
