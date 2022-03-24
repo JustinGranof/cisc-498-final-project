@@ -105,6 +105,9 @@ async function getAdmins() {
       .find({ level: "admin" })
       .toArray();
 
+    // Remove password from the data
+    docs.forEach((doc) => delete doc["password"]);
+
     return docs;
   } else {
     // Could not connect to DB

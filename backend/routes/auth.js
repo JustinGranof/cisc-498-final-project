@@ -9,7 +9,6 @@ router.post("/login", async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
 
-  console.log(req.body);
   //Initialize connection to database
   let user = new User(email);
 
@@ -23,8 +22,7 @@ router.post("/login", async (req, res) => {
   if (!userObj) {
     return res.send({ success: false, body: "Invalid Credentials." });
   } else {
-    user.disable();
-    let data = { date: Date.now() };
+    let data = { email: email, date: Date.now() };
     const token = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "30m",
     });
@@ -46,10 +44,17 @@ function authenticateToken(req, res, next) {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) return res.sendStatus(401);
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, data) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, data) => {
     if (err) return res.sendStatus(403);
 
-    // data contains decoded jwt token
+    // Get email from jwt token
+    let email = data.email;
+    // Get user
+    let user = new User(email);
+    await user.getUserByUsername();
+    // Add the user's authentication level to the request
+    req.level = user.getUser().level;
+
     next();
   });
 }
