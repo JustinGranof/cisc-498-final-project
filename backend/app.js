@@ -6,16 +6,19 @@ const app = express();
 const Users = require("./mongo_classes/userClass.js");
 const Trips = require("./mongo_classes/tripClass.js");
 
+const { authenticateToken } = require("./routes/auth.js");
 const authRouter = require("./routes/auth.js").router;
+const accountRouter = require("./routes/account").router;
 
 const PORT = 3001;
 
 app.use(cors);
 app.use(express.json());
 app.use("/auth", authRouter);
+app.use("/account", authenticateToken, accountRouter);
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("You look lost.");
 });
 
 /*function test(client, db){
@@ -100,4 +103,8 @@ app.get("/createTestUser", (req, res) => {
 });
 
 
-app.listen(PORT, () => console.log("Server listening at port 3001"));
+
+
+app.listen(PORT, async () => {
+  console.log("Server listening at port 3001");
+});

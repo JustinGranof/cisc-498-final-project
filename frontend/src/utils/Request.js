@@ -10,10 +10,13 @@ export default async function request(
   method = "GET",
   path = "",
   body = {},
-  authToken,
+  auth = false,
   headers = { "Content-Type": "application/json" }
 ) {
-  if (authToken) {
+  if (auth) {
+    let user = window.localStorage.getItem("user");
+    if (user) user = JSON.parse(user);
+    const authToken = user.token;
     headers["Authorization"] = "Bearer " + authToken;
   }
 
