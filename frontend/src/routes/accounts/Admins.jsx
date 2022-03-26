@@ -28,6 +28,25 @@ export default function Admins(props) {
     setAdmins(data);
   }
 
+  async function setStatus(email, status) {
+    let data = await request(
+      "POST",
+      "account/updateStatus",
+      { email: email, status: status },
+      true
+    );
+    if (data) {
+      getAdmins();
+    }
+  }
+
+  async function deleteAdmin(email) {
+    let data = await request("POST", "account/delete", { email: email }, true);
+    if (data) {
+      getAdmins();
+    }
+  }
+
   return (
     <>
       <Modal show={open} setShow={setOpen}>
@@ -65,7 +84,7 @@ export default function Admins(props) {
               <tr>
                 <td>Email</td>
                 <td>Created</td>
-                <td>Status</td>
+                <td>Change Status</td>
                 <td></td>
               </tr>
             </thead>
@@ -79,17 +98,28 @@ export default function Admins(props) {
                       <td>{new Date(admin.created).toDateString()}</td>
                       <td>
                         {admin.enabled ? (
-                          <button className="disable-btn status-btn">
+                          <button
+                            onClick={() => setStatus(admin.email, false)}
+                            className="disable-btn status-btn"
+                          >
                             Disable
                           </button>
                         ) : (
-                          <button className="enable-btn status-btn">
+                          <button
+                            onClick={() => setStatus(admin.email, true)}
+                            className="enable-btn status-btn"
+                          >
                             Enable
                           </button>
                         )}
                       </td>
                       <td>
-                        <img className="delete-user" height={22} src={Delete} />
+                        <img
+                          onClick={() => deleteAdmin(admin.email)}
+                          className="delete-user"
+                          height={22}
+                          src={Delete}
+                        />
                       </td>
                     </tr>
                   );
