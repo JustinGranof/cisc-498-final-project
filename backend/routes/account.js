@@ -10,7 +10,6 @@ router.post("/updateStatus", checkSuperAdmin, async (req, res) => {
 
   // Get user from database
   let user = new User(email);
-  await user.getUserByUsername();
   // Update status
   if (status) user.enable();
   else user.disable();

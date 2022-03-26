@@ -46,7 +46,10 @@ class User extends mongoDbClass {
   _setStatus(status) {
     this.db
       .collection("Users")
-      .updateOne({ email: this.user.email }, { $set: { enabled: status } });
+      .updateOne(
+        { email: this.user ? this.user.email : this.username },
+        { $set: { enabled: status } }
+      );
   }
 
   enable() {
