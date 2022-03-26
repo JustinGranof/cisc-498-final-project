@@ -4,6 +4,8 @@ const app = express();
 
 //Include db user class
 const Users = require("./mongo_classes/userClass.js");
+const Trips = require("./mongo_classes/tripClass.js");
+
 const authRouter = require("./routes/auth.js").router;
 
 const PORT = 3001;
@@ -42,13 +44,35 @@ function successfulResponse(res, data) {
 }
 
 app.get("/test", (req, res) => {
-  var bcrypt = require("bcryptjs");
-  var salt = bcrypt.genSaltSync(10);
-  var hash = bcrypt.hashSync("1234", salt);
+  // var bcrypt = require("bcryptjs");
+  // var salt = bcrypt.genSaltSync(10);
+  // var hash = bcrypt.hashSync("1234", salt);
+  let Trip = new Trips();
+
+  var connectStatus = Trip.connect();
+  if (connectStatus == false) {
+    errorMessage(res, "DB Connection Error");
+    return;
+  }
+  const doc = {
+    name: "Test Test",
+    description: "test_Descr",
+  };
+
+  var insertStatus = Trip.createTrip(doc);
+  if (insertStatus.error == true) {
+    errorMessage(res, insertStatus);
+    return;
+  }
+
+  console.log("HERE");
+
+
+  res.send("Hello World");
 
   //Hash for password 1234 for testing is $2a$10$/dcNdrqcJxTUeu.BWdP37edzuloxWttWc/LRirFmKa3qNk2Kpken.
   //Insert this into the database with an email and use for testing
-  res.send(hash);
+  // res.send(hash);
 });
 
 //Run to connect database (if it doesn't exist yet it will be created)
@@ -74,5 +98,6 @@ app.get("/createTestUser", (req, res) => {
 
   res.send("Hello World");
 });
+
 
 app.listen(PORT, () => console.log("Server listening at port 3001"));
