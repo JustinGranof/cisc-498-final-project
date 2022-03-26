@@ -103,6 +103,34 @@ function App() {
                   >
                     Create User
                   </button>
+                  <button
+                    onClick={() => {
+                      request(
+                        "POST",
+                        "account/delete",
+                        { email: "test@gmail.com" },
+                        true
+                      ).then((data) => {
+                        console.log(data);
+                      });
+                    }}
+                  >
+                    Delete User
+                  </button>
+                  <button
+                    onClick={() => {
+                      request(
+                        "POST",
+                        "account/updateStatus",
+                        { email: "test@gmail.com", status: false },
+                        true
+                      ).then((data) => {
+                        console.log(data);
+                      });
+                    }}
+                  >
+                    Update Status
+                  </button>
                 </>
               }
             />

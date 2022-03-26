@@ -58,9 +58,13 @@ class User extends mongoDbClass {
   }
 
   async delete() {
-    this.db
+    let result = await this.db
       .collection("Users")
       .deleteOne({ email: this.user ? this.user.email : this.username });
+
+    if (result.acknowledged && result.deletedCount > 0)
+      return { success: true, body: "Successfully deleted the user." };
+    else return { success: false, body: "Failed to delete the user." };
   }
 
   async createUser(password) {
