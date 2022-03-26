@@ -69,7 +69,10 @@ class User extends mongoDbClass {
     // Look for users with the same email
     let doc = await UsersCollection.findOne({ email: this.username });
     if (doc) {
-      return false;
+      return {
+        success: false,
+        body: "There is already an account with that email.",
+      };
     }
     // Hash the password
     let salt = bcrypt.genSaltSync(10);
@@ -83,7 +86,9 @@ class User extends mongoDbClass {
       created: new Date(),
     });
 
-    return newUser;
+    if (newUser.acknowledged)
+      return { success: true, body: "Successfully created the user." };
+    else return { success: false, body: "Failed to create the user." };
   }
 
   getUser() {

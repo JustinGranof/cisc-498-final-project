@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors")();
 const app = express();
 
-//Include db user class
 const { authenticateToken } = require("./routes/auth.js");
 const authRouter = require("./routes/auth.js").router;
 const accountRouter = require("./routes/account").router;

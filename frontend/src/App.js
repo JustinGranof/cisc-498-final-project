@@ -36,7 +36,7 @@ export function useAuthStatus() {
     if (!user || !JSON.parse(user).token) return setAuth(false);
     user = JSON.parse(user);
     // user has token, verify token with backend
-    let data = await request("POST", "auth", {}, user.token).catch(() => {
+    let data = await request("POST", "auth", {}, true).catch((e) => {
       // token could not be verified
       setAuth(false);
     });
@@ -79,15 +79,31 @@ function App() {
             <Route
               path="*"
               element={
-                <button
-                  onClick={() => {
-                    window.localStorage.removeItem("user");
-                    window.dispatchEvent(new Event("storage"));
-                  }}
-                  style={{ margin: "50px 50px" }}
-                >
-                  Sign Out
-                </button>
+                <>
+                  <button
+                    onClick={() => {
+                      window.localStorage.removeItem("user");
+                      window.dispatchEvent(new Event("storage"));
+                    }}
+                    style={{ margin: "50px 50px" }}
+                  >
+                    Sign Out
+                  </button>
+                  <button
+                    onClick={() => {
+                      request(
+                        "POST",
+                        "account/create",
+                        { email: "test@gmail.com", password: "1234" },
+                        true
+                      ).then((data) => {
+                        console.log(data);
+                      });
+                    }}
+                  >
+                    Create User
+                  </button>
+                </>
               }
             />
 
