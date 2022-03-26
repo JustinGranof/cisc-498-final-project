@@ -20,13 +20,17 @@ export default async function request(
     headers["Authorization"] = "Bearer " + authToken;
   }
 
+  if (method === "GET") body = undefined;
+
   let data = (
     await fetch(process.env.REACT_APP_BACKEND_IP + "/" + path, {
       method: method,
       body: JSON.stringify(body),
       headers: headers,
     })
-  ).json();
+  )
+    .json()
+    .catch(() => null);
 
   return data;
 }
