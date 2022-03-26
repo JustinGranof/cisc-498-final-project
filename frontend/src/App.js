@@ -72,7 +72,7 @@ function App() {
           </Routes>
         </>
       ) : (
-        /* App Flow*/
+        /* App Flow */
         <>
           <Routes>
             <Route path="/classes" element={<ClassList />} />

@@ -12,6 +12,10 @@ export default function Admins(props) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
 
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [error, setError] = useState("");
+
   // Component did mount
   useEffect(() => {
     // Get the admins
@@ -47,21 +51,84 @@ export default function Admins(props) {
     }
   }
 
+  async function createUser() {
+    if (!email || !pass) return;
+    let data = await request(
+      "POST",
+      "account/create",
+      { email: email, password: pass },
+      true
+    );
+    if (data && data.success) {
+      getAdmins();
+      setOpen(false);
+    } else {
+      setError(data.body);
+    }
+  }
+
   return (
     <>
       <Modal show={open} setShow={setOpen}>
         <h2>Create a new Admin</h2>
-        <label>What email should this account use?</label>
-        <br />
-        <input />
-        <br />
-        <label>Enter a password for the account.</label>
-        <br />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            createUser();
+          }}
+        >
+          <label>What email should this account use?</label>
+          <br />
+          <input
+            className="create-admin-input"
+            value={email}
+            placeholder="Ex. johndoe@queensu.ca"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <br />
+          <label style={{ marginTop: "20px", display: "block" }}>
+            Enter a password for the account:
+          </label>
+          <input
+            placeholder="Choose a strong password"
+            className="create-admin-input"
+            value={pass}
+            onChange={(e) => setPass(e.target.value)}
+          />
+          {error && (
+            <p style={{ marginTop: "25px", color: "red" }}>Error: {error}</p>
+          )}
+          <div>
+            <button
+              type={"submit"}
+              style={{ backgroundColor: "#00305E" }}
+              className="create-admin-btn"
+            >
+              Create
+            </button>
+            <button
+              onClick={() => {
+                setOpen(false);
+              }}
+              className="create-admin-btn"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </Modal>
       <div className="classes-container">
         <div className="admins-header">
           <h2>Admin Accounts</h2>
-          <div onClick={() => setOpen(true)} className="create-new">
+          <div
+            onClick={() => {
+              setOpen(true);
+              setError("");
+              setEmail("");
+              setPass("");
+            }}
+            className="create-new"
+          >
             <img height={20} src={Create} />
             Create New
           </div>
@@ -115,7 +182,16 @@ export default function Admins(props) {
                       </td>
                       <td>
                         <img
-                          onClick={() => deleteAdmin(admin.email)}
+                          onClick={() => {
+                            if (
+                              window.confirm(
+                                "Are you sure you want to delete " +
+                                  admin.email +
+                                  "?"
+                              )
+                            )
+                              deleteAdmin(admin.email);
+                          }}
                           className="delete-user"
                           height={22}
                           src={Delete}
