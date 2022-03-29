@@ -115,6 +115,7 @@ async function getAdmins() {
     let docs = await mongo.db
       .collection("Users")
       .find({ level: "admin" })
+      .sort({ created: -1 })
       .toArray();
 
     // Remove password from the data
