@@ -37,7 +37,28 @@ class Trips extends mongoDbClass {
 
     createStudent(doc, tripId){
         const TripsCollection = this.db.collection("Trips");
-        doc._id = require('mongodb').ObjectId();
+       
+
+        var insertDoc;
+        console
+
+        try {
+            //These are the mandatory paramaters, if one is missing it will fail
+            /*insertDoc = {
+                "name": doc.name,
+                "email": doc.contact.email
+            }*/
+            insertDoc = doc;
+            //Can check for validitity (Like uniqueness) here
+            //Some paramaters can be optionally added with if statements
+            //All invalid parameters will be ignored
+        } catch (error) {
+            return {'error': true, 'body': 'Trip details missing.'};
+        }
+        insertDoc._id = require('mongodb').ObjectId();
+
+        console.log(insertDoc);
+
         TripsCollection.updateOne(
             {_id: require('mongodb').ObjectId(tripId)},
             {$push: {Students: doc}}

@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import Logo from "../../img/queens_logo.png";
 
 import "./classform.css";
+import request from "../../utils/Request";
+
 
 export default function StudentForm(props) {
   const { tripID } = useParams();
@@ -46,13 +48,15 @@ export default function StudentForm(props) {
 
   function submit() {
     console.log("SUBMIT:", data);
-    if (!verify()) {
+    if (verify()) {
       // not filled out
       setError("Error: Please fill out all the required fields.");
       return;
     }
 
     // submit
+    request("POST", "trip/student/create", {tripID: tripID, data: data}, true);
+
   }
 
   return (

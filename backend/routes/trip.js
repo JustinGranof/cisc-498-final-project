@@ -60,15 +60,15 @@ router.post("/student/update", async (req, res) => {
 
 router.post("/student/create", async (req, res) => {
     let Trip = new Trips();
+    console.log("HERE");
+    const response = Trip.createStudent(req.body.data, req.body.tripID);
 
-    const response = await Trip.updateStudent(req.body.tripID, req.body.data);
-
-    if (response.error){
-        res.send({ success: false, body: response.body });
-    }
-    else {
-        res.send({success:true, body: response.body})
-    }
+    // if (response.error){
+    //     res.send({ success: false, body: response.body });
+    // }
+    // else {
+    res.send({success:true, body: response.body})
+    // }
 
 });
 
