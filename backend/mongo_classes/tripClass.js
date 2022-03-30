@@ -58,10 +58,10 @@ class Trips extends mongoDbClass {
 
             for (var i = 0; i < trips.length; i++){ //Search for student
                 if (trips[i].Students){
-                    trips[i]['size'] = trips[i]['Students'].length;
+                    trips[i]['numStudents'] = trips[i]['Students'].length;
                 }
                 else {
-                    trips[i]['size'] = 0;
+                    trips[i]['numStudents'] = 0;
                 }
             }
             

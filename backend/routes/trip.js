@@ -58,6 +58,20 @@ router.post("/student/update", async (req, res) => {
 
 });
 
+router.post("/student/create", async (req, res) => {
+    let Trip = new Trips();
+
+    const response = await Trip.updateStudent(req.body.tripID, req.body.data);
+
+    if (response.error){
+        res.send({ success: false, body: response.body });
+    }
+    else {
+        res.send({success:true, body: response.body})
+    }
+
+});
+
 
 /**
  * Middleware to ensure the request is from a super admin account
