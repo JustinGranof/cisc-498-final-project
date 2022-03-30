@@ -6,7 +6,7 @@
 }
 
 .body {
-  background-color: #c3cce0;
+  background-color: #e7e7e7;
   font-family: "Open Sans", sans-serif;
   display: flex;
   align-items: center;
@@ -64,7 +64,8 @@
 }
 
 .form-control input,
-.form-control select {
+.form-control select,
+.form-control textarea {
   border: 2px solid #f0f0f0;
   border-radius: 4px;
   display: block;
@@ -127,4 +128,5 @@
   padding: 10px;
   margin-top: 20px;
   width: 100%;
+  margin-top: 40px;
 }

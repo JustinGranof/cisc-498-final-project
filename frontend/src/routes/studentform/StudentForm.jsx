@@ -12,6 +12,7 @@ export default function StudentForm(props) {
     name: "",
     dob: "",
     gender: "Male",
+    medical: "",
     contact: {
       name: "",
       email: "",
@@ -20,6 +21,7 @@ export default function StudentForm(props) {
   };
 
   const [data, setData] = useState(DATA_FIELDS);
+  const [error, setError] = useState("");
 
   function updateData(key, value, parent = null) {
     let temp = { ...data };
@@ -28,7 +30,29 @@ export default function StudentForm(props) {
     setData(temp);
   }
 
-  function submit() {}
+  function verify() {
+    let missing = false;
+    Object.keys(data).forEach((key) => {
+      if (!data[key]) missing = true;
+    });
+
+    Object.keys(data["contact"]).forEach((key) => {
+      if (!data[key]) missing = true;
+    });
+
+    return !missing;
+  }
+
+  function submit() {
+    console.log("SUBMIT:", data);
+    if (!verify()) {
+      // not filled out
+      setError("Error: Please fill out all the required fields.");
+      return;
+    }
+
+    // submit
+  }
 
   return (
     <>
@@ -113,12 +137,15 @@ export default function StudentForm(props) {
             </div>
             <hr />
             <h3>Medical Information</h3>
-            <div className="form-control">
-              <label for="medinfo">Medical Information</label>
-              <textarea id="medinfo" rows="5" cols="50">
-                Enter any medical info
-              </textarea>
-            </div>
+            <InputField
+              data={data}
+              dataKey="medical"
+              label="Allergies, conditions, etc."
+              type="textarea"
+              update={updateData}
+              placeholder="Enter your medical information here..."
+            />
+            {error && <p style={{ color: "red" }}>{error}</p>}
             <button type={"submit"}>Submit</button>
           </form>
         </div>
@@ -131,7 +158,11 @@ function InputField(props) {
   props = { ...{ required: true }, ...props };
   return (
     <div className="form-control">
-      <label htmlFor={props.dataKey}>
+      <label
+        className={props.dataKey + "-label"}
+        style={{ display: "block" }}
+        htmlFor={props.dataKey}
+      >
         {props.required && <span style={{ color: "red" }}>* </span>}
         {props.label}
       </label>
@@ -145,6 +176,14 @@ function InputField(props) {
             <option key={index}>{option}</option>
           ))}
         </select>
+      ) : props.type === "textarea" ? (
+        <textarea
+          value={props.data[props.dataKey]}
+          onChange={(e) => props.update(props.dataKey, e.target.value)}
+          rows={5}
+          placeholder={props.placeholder}
+          id={props.dataKey}
+        />
       ) : (
         <input
           type={props.type ? props.type : "text"}
