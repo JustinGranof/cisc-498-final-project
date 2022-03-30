@@ -1,11 +1,10 @@
 import "./StudentOverview.css";
-import profile from "./Profile.png";
-import edit from "./edit.png";
-import update from "./save.png";
+import profile from "../../img/Profile.png";
+import edit from "../../img/edit.png";
+import update from "../../img/save.png";
 
 import { useState } from "react";
-import ReactDOM from "react-dom";
-import NavBar from "./NavBar";
+import NavBar from "../../utils/NavBar";
 
 function StudentOverview() {
   const [name, setName] = useState("Justin Granofsky");

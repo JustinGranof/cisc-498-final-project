@@ -1,6 +1,6 @@
 // nav bar
 import "./NavBar.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const NavBar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
