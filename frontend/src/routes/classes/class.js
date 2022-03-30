@@ -10,6 +10,8 @@ export default function Class() {
     const [query, setQuery] = useState("")
     const [value, setValue] = useState('yes');
     const location = useLocation();
+    const [search, setSearch] = useState("");
+
 
     // get data for {location.state.name}
     // example data
@@ -38,6 +40,8 @@ export default function Class() {
     function studentList() {
         return students.map((student, index) => {
             const { id, firstName, lastName, email, phone } = student
+            const name = firstName.toLowerCase() + " " + lastName.toLowerCase()
+            if (!name.includes(search.toLowerCase())) return;
             return (
                 <tr key={id}>
                     <td>{lastName}, {firstName}</td>
@@ -51,7 +55,8 @@ export default function Class() {
                                     firstName + " " + lastName +
                                     "?"
                                 )
-                            ) deleteUser(email) }} 
+                            ) deleteUser(email)
+                        }}
                             className="delete-btn">
                             <RiDeleteBinFill></RiDeleteBinFill>
                         </button>
@@ -94,10 +99,20 @@ export default function Class() {
                     }} on="yes" off="no" value={value} onChange={setValue} />
                 </div>
             </div>
-            <div>
-                <p>Search</p>
-                <input className="search-bar" placeholder="Enter a student's name" />
+
+            <div className="search-container">
+                <label htmlFor="search">Search</label>
+                <br />
+                <input
+                    autoComplete="off"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    id="search"
+                    placeholder="Enter a student's name"
+                    className="search-input"
+                />
             </div>
+
             <div className="table-container">
                 <table className="student-table" style={{ marginTop: 20 }}>
                     <tbody>{studentList()}</tbody>
