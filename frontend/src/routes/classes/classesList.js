@@ -23,29 +23,29 @@ export default function ClassList() {
         if (!name) return;
         let data = await request(
             "POST",
-            "class/create", 
+            "class/create",
             { name: name },
             true
         );
         if (data && data.success) {
-            
+
             setOpen(false);
-          } else {
+        } else {
             setError(data.body);
-          }
+        }
     }
 
     async function deleteClass(name) {
         let data = await request(
-            "POST", 
-            "class/delete", 
-            { name: name }, 
+            "POST",
+            "class/delete",
+            { name: name },
             true
         );
         // if (data) {
         //   //get Data
         // }
-      }
+    }
 
     // Display classes
     return (
@@ -110,17 +110,27 @@ export default function ClassList() {
                 </div>
 
                 {classes.map((item, index) => (
-                    <Link to="/class">
                         <button className="class-btn">
                             <div className="delete-btn-container">
                                 <button className="delete-btn">
-                                    <RiDeleteBinFill className="delete-btn"></RiDeleteBinFill>
+                                    <RiDeleteBinFill className="delete-btn"
+                                        onClick={(e) => {
+                                            if (
+                                                window.confirm(
+                                                    "Are you sure you want to delete " +
+                                                    item.name +
+                                                    "?"
+                                                )
+                                            )
+                                                deleteClass(item.name);
+                                        }}></RiDeleteBinFill>
                                 </button>
                             </div>
-                            <p className="name">{item.name}</p>
-                            <p className="size">{item.numStudents} students</p>
+                            <Link to="/class" className="link">
+                                <p className="name">{item.name}</p>
+                                <p className="size">{item.numStudents} students</p>
+                            </Link>
                         </button>
-                    </Link>
                 ))}
             </div>
         </>

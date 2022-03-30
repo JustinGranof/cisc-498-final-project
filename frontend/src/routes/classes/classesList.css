@@ -30,12 +30,12 @@ h1 {
 }
 
 .class-btn {
-    margin: 25px 25px;
+    margin: 20px 20px;
     background-color: #FAFAFA;
     color: black;
     border: none;
     outline: none;
-    width: 300px;
+    width: 280px;
     padding: 30px 30px 30px 30px;
     font-size: 1rem;
     box-shadow: 2px 2px 10px 1px #D6D6D6;
@@ -43,7 +43,6 @@ h1 {
 }
 
 .class-btn:hover {
-    cursor: pointer;
     filter: brightness(0.95);
   }
 
@@ -51,9 +50,19 @@ h1 {
     text-align: left;
 }
 
+.link {
+    color: black;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #78AED3;
+}
+
 .size {
     text-align: left;
     color: gray;
+    text-transform: none;
 }
 
 .create-btn {
@@ -78,7 +87,13 @@ h1 {
     flex-direction: row-reverse;
 }
 
+.container {
+    display: inline-block;
+}
+
 .delete-btn {
+    margin: 0px 0px;
+    padding: 0px 0px;
     background-color: transparent;
     border: none;
     outline: none;
