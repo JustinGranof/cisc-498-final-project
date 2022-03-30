@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./classesList.css";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Modal from "../../utils/Modal";
@@ -11,6 +11,7 @@ export default function ClassList() {
     const [open, setOpen] = useState(false);
     const [name, setName] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     /* get classes data */
     const [classes, setClasses] = useState([
@@ -18,6 +19,10 @@ export default function ClassList() {
         { name: 'GEOL 237', numStudents: 24 },
         { name: 'GEOL 102', numStudents: 30 }
     ]);
+
+    const toClass=(className)=>{
+        navigate('/class',{state:{name:className}});
+          }
 
     async function createClass() {
         if (!name) return;
@@ -126,10 +131,16 @@ export default function ClassList() {
                                         }}></RiDeleteBinFill>
                                 </button>
                             </div>
-                            <Link to="/class" className="link">
+
+                            <div onClick={()=>{toClass(item.name)}} className="link" >
                                 <p className="name">{item.name}</p>
                                 <p className="size">{item.numStudents} students</p>
-                            </Link>
+                            </div>
+
+                            {/* <Link to={{ pathname: "/class", state: {name: item.name}}} className="link" >
+                                <p className="name">{item.name}</p>
+                                <p className="size">{item.numStudents} students</p>
+                            </Link> */}
                         </button>
                 ))}
             </div>
