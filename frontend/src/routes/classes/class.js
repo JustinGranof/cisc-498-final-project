@@ -69,16 +69,16 @@ export default function Class() {
       return "loading";
     }
     return students.map((student, index) => {
-      const { id, name, email, phone } = student;
+      const { _id, name, email, phone } = student;
 
       if (!name.includes(search.toLowerCase())) return;
       return (
         <tr
           onClick={() => {
-            navigate("/classes/" + tripID + "/" + id);
+            navigate("/classes/" + tripID + "/" + _id);
           }}
           className="class-student-row"
-          key={id}
+          key={_id}
         >
           <td>{name}</td>
           <td>{email}</td>
