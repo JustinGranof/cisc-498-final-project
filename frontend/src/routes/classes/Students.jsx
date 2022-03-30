@@ -7,10 +7,10 @@ import request from "../../utils/Request";
 import NavBar from "../../utils/NavBar";
 
 import { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function Students() {
-  var tripId = "623cac53c071a74d9056f69a";
-  var studentId = "62431c7b1892d0b2480fcc6c";
+  const { tripID, studentID } = useParams();
 
   const [name, setName] = useState("");
   const [birth, setBirth] = useState("January 19, 2000");
@@ -36,7 +36,7 @@ function Students() {
     let data = await request(
       "POST",
       "trip/student/get",
-      { studentID: studentId, tripID: tripId },
+      { studentID: studentID, tripID: tripID },
       true
     );
 
@@ -52,7 +52,7 @@ function Students() {
     let data = await request(
       "POST",
       "trip/student/update",
-      { studentID: studentId, tripID: tripId, data: { name: name } },
+      { studentID: studentID, tripID: tripID, data: { name: name } },
       true
     );
 
@@ -81,7 +81,7 @@ function Students() {
       <div className="main-div">
         <div className="grid-container">
           <div className="grid-item grid-item-1 one">
-            <a href="#">Back to Class #1</a>
+            <Link to={-1}>Back to Class #1</Link>
           </div>
           <div className="grid-item grid-item-2 two">
             <a href="#">Logout</a>

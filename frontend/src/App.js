@@ -78,10 +78,10 @@ function App() {
         <>
           <Routes>
             <Route path="/classes" element={<ClassList />} />
-            <Route path="/class" element={<Class />} />
-            <Route path="/admins" element={<Admins />} />
-            <Route path="/students" element={<Students />} />
+            <Route path="/classes/:tripID" element={<Class />} />
+            <Route path="/classes/:tripID/:studentID" element={<Students />} />
             <Route path="/form/:tripID" element={<StudentForm />} />
+            <Route path="/admins" element={<Admins />} />
             <Route path="*" element={<Navigate to="/classes" />} />
           </Routes>
         </>
