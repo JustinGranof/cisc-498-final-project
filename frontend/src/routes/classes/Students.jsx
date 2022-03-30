@@ -3,16 +3,13 @@ import profile from "./Profile.png";
 import edit from "./edit.png";
 import request from "../../utils/Request";
 
-
 import { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 
 function Students() {
   var tripId = "623cac53c071a74d9056f69a";
   var studentId = "62431c7b1892d0b2480fcc6c";
 
-
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [birth, setBirth] = useState("January 19, 2000");
   const [height, setHeight] = useState("5'9");
   const [gender, setGender] = useState("Male");
@@ -33,11 +30,16 @@ function Students() {
   }, []);
 
   async function getStudentData() {
-    let data = await request("POST", "trip/student/get", {studentID: studentId, tripID: tripId}, true);
+    let data = await request(
+      "POST",
+      "trip/student/get",
+      { studentID: studentId, tripID: tripId },
+      true
+    );
     console.log(data);
 
     if (!data.success) {
-      alert("Error getting student information.")
+      alert("Error getting student information.");
       return;
     }
 
@@ -45,18 +47,22 @@ function Students() {
   }
 
   async function updateStudent() {
-    let data = await request("POST", "trip/student/update", {studentID: studentId, tripID: tripId, data: {name: name}}, true);
+    let data = await request(
+      "POST",
+      "trip/student/update",
+      { studentID: studentId, tripID: tripId, data: { name: name } },
+      true
+    );
 
     if (!data.success) {
-      alert("Error updating student.")
+      alert("Error updating student.");
       return;
     }
   }
 
-
   const handleClick = () => {
     //If not disabled we update it
-    if (!isDisabled){
+    if (!isDisabled) {
       updateStudent();
     }
 
