@@ -1,7 +1,10 @@
 import "./StudentOverview.css";
 import profile from "../../img/Profile.png";
 import edit from "../../img/edit.png";
+import update from "../../img/save.png";
 import request from "../../utils/Request";
+
+import NavBar from "../../utils/NavBar";
 
 import { useState, useEffect } from "react";
 
@@ -74,157 +77,180 @@ function Students() {
   };
 
   return (
-    <div className="main-div">
-      <div className="grid-container">
-        <div className="grid-item grid-item-1 one">
-          <a href="#">Back to Class #1</a>
+    <>
+      <NavBar />
+      <div className="main-div">
+        <div className="grid-container">
+          <div className="grid-item grid-item-1 one">
+            <a href="#">Back to Class #1</a>
+          </div>
+          <div className="grid-item grid-item-2 two">
+            <a href="#">Logout</a>
+          </div>
         </div>
-        <div className="grid-item grid-item-2 two">
-          <a href="#">Logout</a>
+        <div className="">
+          <div className="flbox">
+            <img className="img-1" src={profile} height={34} />
+            <h2>Granofsky, Justin</h2>
+          </div>
+          <div className="grid-container-2">
+            <div className="flbox">
+              <p className="heading-2">Medical Information</p>
+            </div>
+            {isDisabled == true && (
+              <div className="flbox-1">
+                <button type="button" onClick={handleClick}>
+                  <p className="heading-3">Update</p>
+                  <img className="img-2" src={edit} height={23} />
+                </button>
+              </div>
+            )}
+            {isDisabled == false && (
+              <div className="flbox-1">
+                <button type="button" onClick={handleClick}>
+                  <p className="heading-3">Save</p>
+                  <img className="img-2" src={update} height={23} />
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="medical">
+            <div className="flbox-2">
+              <h4 className="med-header">Full Name:</h4>
+              <form>
+                <input
+                  type="text"
+                  value={name}
+                  disabled={isDisabled}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </form>
+            </div>
+            <div className="flbox-2">
+              <h4 className="med-header">Date of Birth:</h4>
+              <form>
+                <input
+                  type="text"
+                  value={birth}
+                  disabled={isDisabled}
+                  onChange={(e) => setBirth(e.target.value)}
+                />
+              </form>
+            </div>
+            <div className="flbox-2">
+              <h4 className="med-header">Height:</h4>
+              <form>
+                <input
+                  type="text"
+                  value={height}
+                  disabled={isDisabled}
+                  onChange={(e) => setHeight(e.target.value)}
+                />
+              </form>
+            </div>
+            <div className="flbox-2">
+              <h4 className="med-header">Gender:</h4>
+              <form>
+                <select
+                  id="gender"
+                  name="gender"
+                  disabled={isDisabled}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </form>
+            </div>
+          </div>
+          <div className="grid-container-2">
+            <div className="flbox">
+              <p className="heading-2">Contact Information</p>
+            </div>
+            {isDisabled2 == true && (
+              <div className="flbox-1">
+                <button type="button" onClick={handleClick2}>
+                  <p className="heading-3">Update</p>
+                  <img className="img-2" src={edit} height={23} />
+                </button>
+              </div>
+            )}
+            {isDisabled2 == false && (
+              <div className="flbox-1">
+                <button type="button" onClick={handleClick2}>
+                  <p className="heading-3">Save</p>
+                  <img className="img-2" src={update} height={23} />
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="medical">
+            <div className="flbox-2">
+              <h4 className="med-header">Email:</h4>
+              <form>
+                <input
+                  type="text"
+                  value={email}
+                  disabled={isDisabled2}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </form>
+            </div>
+            <div className="flbox-2">
+              <h4 className="med-header">Phone Number:</h4>
+              <form>
+                <input
+                  type="tel"
+                  maxLength="12"
+                  pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
+                  value={number}
+                  disabled={isDisabled2}
+                  onChange={(e) => setNumber(e.target.value)}
+                />
+              </form>
+            </div>
+            <div className="flbox-2">
+              <h4 className="med-header">Address:</h4>
+              <form>
+                <input
+                  type="text"
+                  value={address}
+                  disabled={isDisabled2}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </form>
+            </div>
+            <div className="flbox-2">
+              <h4 className="med-header">Emergency Contact Name:</h4>
+              <form>
+                <input
+                  type="text"
+                  value={emergency}
+                  disabled={isDisabled2}
+                  onChange={(e) => setEmergency(e.target.value)}
+                />
+              </form>
+            </div>
+            <div className="flbox-2">
+              <h4 className="med-header">Emergency Number:</h4>
+              <form>
+                <input
+                  type="tel"
+                  maxLength="12"
+                  pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
+                  value={emergencyNumber}
+                  disabled={isDisabled2}
+                  onChange={(e) => setEmergencyNumber(e.target.value)}
+                />
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="">
-        <div className="flbox">
-          <img className="img-1" src={profile} height={34} />
-          <h2>Granofsky, Justin</h2>
-        </div>
-        <div className="grid-container-2">
-          <div className="flbox">
-            <p className="heading-2">Medical Information</p>
-          </div>
-          <div className="flbox-1">
-            <button type="button" onClick={handleClick}>
-              <p className="heading-3">Update</p>
-              <img className="img-2" src={edit} height={23} />
-            </button>
-          </div>
-        </div>
-
-        <div className="medical">
-          <div className="flbox-2">
-            <h4 className="med-header">Full Name:</h4>
-            <form>
-              <input
-                type="text"
-                value={name}
-                disabled={isDisabled}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </form>
-          </div>
-          <div className="flbox-2">
-            <h4 className="med-header">Date of Birth:</h4>
-            <form>
-              <input
-                type="text"
-                value={birth}
-                disabled={isDisabled}
-                onChange={(e) => setBirth(e.target.value)}
-              />
-            </form>
-          </div>
-          <div className="flbox-2">
-            <h4 className="med-header">Height:</h4>
-            <form>
-              <input
-                type="text"
-                value={height}
-                disabled={isDisabled}
-                onChange={(e) => setHeight(e.target.value)}
-              />
-            </form>
-          </div>
-          <div className="flbox-2">
-            <h4 className="med-header">Gender:</h4>
-            <form>
-              <select
-                id="gender"
-                name="gender"
-                disabled={isDisabled}
-                onChange={(e) => setGender(e.target.value)}
-              >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </form>
-          </div>
-        </div>
-        <div className="grid-container-2">
-          <div className="flbox">
-            <p className="heading-2">Contact Information</p>
-          </div>
-          <div className="flbox-1">
-            <button type="button" onClick={handleClick2}>
-              <p className="heading-3">Update</p>
-              <img className="img-2" src={edit} height={23} />
-            </button>
-          </div>
-        </div>
-
-        <div className="medical">
-          <div className="flbox-2">
-            <h4 className="med-header">Email:</h4>
-            <form>
-              <input
-                type="text"
-                value={email}
-                disabled={isDisabled2}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </form>
-          </div>
-          <div className="flbox-2">
-            <h4 className="med-header">Phone Number:</h4>
-            <form>
-              <input
-                type="tel"
-                maxLength="12"
-                pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
-                value={number}
-                disabled={isDisabled2}
-                onChange={(e) => setNumber(e.target.value)}
-              />
-            </form>
-          </div>
-          <div className="flbox-2">
-            <h4 className="med-header">Address:</h4>
-            <form>
-              <input
-                type="text"
-                value={address}
-                disabled={isDisabled2}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </form>
-          </div>
-          <div className="flbox-2">
-            <h4 className="med-header">Emergency Contact Name:</h4>
-            <form>
-              <input
-                type="text"
-                value={emergency}
-                disabled={isDisabled2}
-                onChange={(e) => setEmergency(e.target.value)}
-              />
-            </form>
-          </div>
-          <div className="flbox-2">
-            <h4 className="med-header">Emergency Number:</h4>
-            <form>
-              <input
-                type="tel"
-                maxLength="12"
-                pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
-                value={emergencyNumber}
-                disabled={isDisabled2}
-                onChange={(e) => setEmergencyNumber(e.target.value)}
-              />
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
 
