@@ -16,6 +16,7 @@ import React, { useEffect, useState } from "react";
 
 import request from "./utils/Request";
 import Admins from "./routes/accounts/Admins";
+import StudentForm from "./routes/studentform/StudentForm";
 
 export function useAuthStatus() {
   const [auth, setAuth] = useState();
@@ -80,6 +81,7 @@ function App() {
             <Route path="/class" element={<Class />} />
             <Route path="/admins" element={<Admins />} />
             <Route path="/students" element={<Students />} />
+            <Route path="/form/:tripID" element={<StudentForm />} />
             <Route path="*" element={<Navigate to="/classes" />} />
           </Routes>
         </>
