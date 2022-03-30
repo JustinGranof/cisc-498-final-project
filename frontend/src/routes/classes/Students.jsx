@@ -1,6 +1,6 @@
 import "./StudentOverview.css";
-import profile from "./Profile.png";
-import edit from "./edit.png";
+import profile from "../../img/Profile.png";
+import edit from "../../img/edit.png";
 import request from "../../utils/Request";
 
 import { useState, useEffect } from "react";

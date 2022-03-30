@@ -3,6 +3,7 @@ import Login from "./routes/login/Login";
 import Reset from "./routes/login/Reset";
 import ClassList from "./routes/classes/classesList";
 import Class from "./routes/classes/class";
+import Students from "./routes/classes/Students";
 
 // React Router imports
 import {
@@ -15,7 +16,6 @@ import React, { useEffect, useState } from "react";
 
 import request from "./utils/Request";
 import Admins from "./routes/accounts/Admins";
-import Students from "./routes/students/Students";
 
 export function useAuthStatus() {
   const [auth, setAuth] = useState();
@@ -80,66 +80,7 @@ function App() {
             <Route path="/class" element={<Class />} />
             <Route path="/admins" element={<Admins />} />
             <Route path="/students" element={<Students />} />
-            <Route
-              path="/"
-              element={
-                <>
-                  <button
-                    onClick={() => {
-                      window.localStorage.removeItem("user");
-                      window.dispatchEvent(new Event("storage"));
-                    }}
-                    style={{ margin: "50px 50px" }}
-                  >
-                    Sign Out
-                  </button>
-                  <button
-                    onClick={() => {
-                      request(
-                        "POST",
-                        "account/create",
-                        { email: "test@gmail.com", password: "1234" },
-                        true
-                      ).then((data) => {
-                        console.log(data);
-                      });
-                    }}
-                  >
-                    Create User
-                  </button>
-                  <button
-                    onClick={() => {
-                      request(
-                        "POST",
-                        "account/delete",
-                        { email: "test@gmail.com" },
-                        true
-                      ).then((data) => {
-                        console.log(data);
-                      });
-                    }}
-                  >
-                    Delete User
-                  </button>
-                  <button
-                    onClick={() => {
-                      request(
-                        "POST",
-                        "account/updateStatus",
-                        { email: "test@gmail.com", status: false },
-                        true
-                      ).then((data) => {
-                        console.log(data);
-                      });
-                    }}
-                  >
-                    Update Status
-                  </button>
-                </>
-              }
-            />
-
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/classes" />} />
           </Routes>
         </>
       )}

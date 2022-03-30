@@ -4,7 +4,7 @@
   --select-arrow: var(--select-border);
 }
 
-button {
+.main-div button {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -13,11 +13,11 @@ button {
   background: none;
 }
 
-button:hover {
+.main-div button:hover {
   cursor: pointer;
 }
 
-input {
+.main-div input {
   border-top-style: hidden;
   border-right-style: hidden;
   border-left-style: hidden;
@@ -26,11 +26,11 @@ input {
   font-size: 18px;
 }
 
-input:focus {
+.main-div input:focus {
   outline: none;
 }
 
-input:disabled {
+.main-div input:disabled {
   color: #666666;
   outline: none;
   border-top-style: hidden;
