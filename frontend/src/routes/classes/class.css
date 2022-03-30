@@ -1,80 +1,82 @@
 .nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .classes-container {
-    display: block;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-top: 5vh;
-  }
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 5vh;
+}
 
 .join-btn {
-      background-color: #00305E;
-      color: white;
-      padding: 10px 25px;
-      border: none;
-      outline: none;
-      border-radius: 7px;
-  }
+  background-color: #00305e;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  outline: none;
+  border-radius: 7px;
+}
 
 .join-btn:hover {
-    cursor: pointer;
-    filter: brightness(1.5);
+  cursor: pointer;
+  filter: brightness(1.5);
 }
 
 .header-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .student-table {
-    width: 100%;
-    border: none;
-    border-collapse: collapse;
+  width: 100%;
+  border: none;
+  border-collapse: collapse;
 }
 
 td {
-    padding: 15px;
+  padding: 15px;
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 .search-container {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 
 .search-input {
-    width: 100%;
-    padding: 10px 10px;
-    margin-top: 10px;
-    outline: none;
-    border: 1px solid rgba(0, 0, 0, 0.527);
-    border-radius: 10px;
-    background-color: #f2f2f2;
-  }
+  width: 100%;
+  padding: 10px 10px;
+  margin-top: 10px;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.527);
+  border-radius: 10px;
+  background-color: #f2f2f2;
+}
 
 .table-container {
-    padding-bottom: 100px;
+  padding-bottom: 100px;
 }
 
 .delete-btn {
-    background-color: transparent;
-    border: none;
-    outline: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 
 .delete-btn:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-
+.class-student-row:hover {
+  cursor: pointer;
+}
