@@ -15,6 +15,8 @@ export default function Class() {
   const [search, setSearch] = useState("");
   const [students, setStudents] = useState(undefined);
 
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     getStudents();
   }, []);
@@ -61,6 +63,16 @@ export default function Class() {
   }
 
   async function getJoinLink() {
+    let path = document.location.href;
+    let finder = path.substring(path.indexOf("//") + 2);
+    let missed = path.substring(0, path.indexOf("//") + 2);
+    finder = finder.indexOf("/") + missed.length;
+    let url = path.substring(0, finder);
+    navigator.clipboard.writeText(url + "/form/" + tripID);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 7500);
     return;
   }
 
@@ -155,6 +167,7 @@ export default function Class() {
           />
         </div>
       </div>
+      {copied && <p>Copied to clipboard!</p>}
 
       <div className="search-container">
         <label htmlFor="search">Search</label>
