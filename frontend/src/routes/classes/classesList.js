@@ -20,11 +20,12 @@ export default function ClassList() {
         { name: 'GEOL 102', numStudents: 30 }
     ]);
 
-    const toClass=(className)=>{
-        navigate('/class',{state:{name:className}});
-          }
+    const toClass = (className) => {
+        navigate('/class', { state: { name: className } });
+    }
 
     async function createClass() {
+
         if (!name) return;
         let data = await request(
             "POST",
@@ -32,8 +33,8 @@ export default function ClassList() {
             { name: name },
             true
         );
+        // check for unique class name
         if (data && data.success) {
-
             setOpen(false);
         } else {
             setError(data.body);
@@ -115,33 +116,28 @@ export default function ClassList() {
                 </div>
 
                 {classes.map((item, index) => (
-                        <button className="class-btn">
-                            <div className="delete-btn-container">
-                                <button className="delete-btn">
-                                    <RiDeleteBinFill className="delete-btn"
-                                        onClick={(e) => {
-                                            if (
-                                                window.confirm(
-                                                    "Are you sure you want to delete " +
-                                                    item.name +
-                                                    "?"
-                                                )
+                    <button className="class-btn">
+                        <div className="delete-btn-container">
+                            <button className="delete-btn">
+                                <RiDeleteBinFill className="delete-btn"
+                                    onClick={(e) => {
+                                        if (
+                                            window.confirm(
+                                                "Are you sure you want to delete " +
+                                                item.name +
+                                                "?"
                                             )
-                                                deleteClass(item.name);
-                                        }}></RiDeleteBinFill>
-                                </button>
-                            </div>
+                                        )
+                                            deleteClass(item.name);
+                                    }}></RiDeleteBinFill>
+                            </button>
+                        </div>
 
-                            <div onClick={()=>{toClass(item.name)}} className="link" >
-                                <p className="name">{item.name}</p>
-                                <p className="size">{item.numStudents} students</p>
-                            </div>
-
-                            {/* <Link to={{ pathname: "/class", state: {name: item.name}}} className="link" >
-                                <p className="name">{item.name}</p>
-                                <p className="size">{item.numStudents} students</p>
-                            </Link> */}
-                        </button>
+                        <div onClick={() => { toClass(item.name) }} className="link" >
+                            <p className="name">{item.name}</p>
+                            <p className="size">{item.numStudents} students</p>
+                        </div>
+                    </button>
                 ))}
             </div>
         </>

@@ -25,7 +25,7 @@ export default function Class() {
         { "id": 7, "firstName": "Selena", "lastName": "Gomez", "email": "abc@gmail.com", "phone": "613-849-3928" },
     ]
 
-    async function deleteUser(email) {
+    async function deleteStudent(email) {
         let data = await request(
             "POST",
             "user/delete",
@@ -35,6 +35,10 @@ export default function Class() {
         // if (data) {
         //   //get Data
         // }
+    }
+
+    async function getJoinLink() {
+        return;
     }
 
     function studentList() {
@@ -55,7 +59,7 @@ export default function Class() {
                                     firstName + " " + lastName +
                                     "?"
                                 )
-                            ) deleteUser(email)
+                            ) deleteStudent(email)
                         }}
                             className="delete-btn">
                             <RiDeleteBinFill></RiDeleteBinFill>
@@ -80,7 +84,7 @@ export default function Class() {
             <h1>{location.state.name}</h1>
 
             <div className="header-bar">
-                <button className="join-btn">Get Student Join Link</button>
+                <button onClick={() => { getJoinLink() }} className="join-btn">Get Student Join Link</button>
                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     <p style={{ margin: 10 }}>Allow new students to join</p>
                     <Switch styles={{
