@@ -67,7 +67,7 @@ class Trips extends mongoDbClass {
 
         trip = trip.body;
 
-        if (trip.Students){ //If students exist
+        if (trip && trip.Students){ //If students exist
             for (var i = 0; i < trip.Students.length; i++){ //Search for student
                 if (trip.Students[i]._id && require('mongodb').ObjectId(trip.Students[i]._id).toString() == id){
                     return {'error': false, 'body': trip.Students[i], index: i};
