@@ -16,6 +16,20 @@ router.post("/get", async (req, res) => {
 
 });
 
+router.post("/create", async (req, res) => {
+    let Trip = new Trips();
+
+    const response = Trip.createTrip(req.body);
+
+    // if (response.error){
+    //     res.send({ success: false, body: response.body });
+    // }
+    // else {
+    res.send({success:true, body: response.body})
+    // }
+
+});
+
 router.post("/student/get", async (req, res) => {
     let Trip = new Trips();
 
@@ -60,7 +74,7 @@ router.post("/student/update", async (req, res) => {
 
 router.post("/student/create", async (req, res) => {
     let Trip = new Trips();
-    console.log("HERE");
+
     const response = Trip.createStudent(req.body.data, req.body.tripID);
 
     // if (response.error){
