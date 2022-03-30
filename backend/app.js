@@ -9,6 +9,8 @@ const Trips = require("./mongo_classes/tripClass.js");
 const { authenticateToken } = require("./routes/auth.js");
 const authRouter = require("./routes/auth.js").router;
 const accountRouter = require("./routes/account").router;
+const tripRouter = require("./routes/trip").router;
+
 
 const PORT = 3001;
 
@@ -16,6 +18,7 @@ app.use(cors);
 app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/account", authenticateToken, accountRouter);
+app.use("/trip", tripRouter);
 
 app.get("/", (req, res) => {
   res.send("You look lost.");
@@ -62,7 +65,7 @@ app.get("/test", (req, res) => {
     description: "test_Descr",
   };
 
-  var insertStatus = Trip.createTrip(doc);
+  var insertStatus = Trip.createStudent(doc, '623cac53c071a74d9056f69a');
   if (insertStatus.error == true) {
     errorMessage(res, insertStatus);
     return;

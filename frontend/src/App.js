@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 
 import request from "./utils/Request";
 import Admins from "./routes/accounts/Admins";
+import Students from "./routes/students/Students";
 
 export function useAuthStatus() {
   const [auth, setAuth] = useState();
@@ -78,6 +79,7 @@ function App() {
             <Route path="/classes" element={<ClassList />} />
             <Route path="/class" element={<Class />} />
             <Route path="/admins" element={<Admins />} />
+            <Route path="/students" element={<Students />} />
             <Route
               path="/"
               element={
