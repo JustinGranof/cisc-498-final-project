@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import Logo from "../../img/queens_logo.png";
 
 import "./classform.css";
 
 export default function StudentForm(props) {
+  const { tripID } = useParams();
+
   const DATA_FIELDS = {
     name: "",
     dob: "",

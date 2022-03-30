@@ -81,7 +81,7 @@ function App() {
             <Route path="/class" element={<Class />} />
             <Route path="/admins" element={<Admins />} />
             <Route path="/students" element={<Students />} />
-            <Route path="/form" element={<StudentForm />} />
+            <Route path="/form/:tripID" element={<StudentForm />} />
             <Route path="*" element={<Navigate to="/classes" />} />
           </Routes>
         </>
