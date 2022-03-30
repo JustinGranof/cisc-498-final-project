@@ -17,6 +17,7 @@ export default function StudentForm(props) {
       name: "",
       email: "",
       relationship: "",
+      phone: "",
     },
   };
 
