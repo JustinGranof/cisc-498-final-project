@@ -13,12 +13,25 @@ export default function ClassList() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
+    useEffect(() => {
+        getClasses();
+     }, []);
+ 
+
     /* get classes data */
-    const [classes, setClasses] = useState([
-        { name: 'GEOL 101', numStudents: 26 },
-        { name: 'GEOL 237', numStudents: 24 },
-        { name: 'GEOL 102', numStudents: 30 }
-    ]);
+    const [classes, setClasses] = useState(undefined);
+
+    async function getClasses() {
+        let data = await request("POST", "trip/get", {}, true);
+    
+        if (!data.success) {
+          alert("Error getting class information.");
+          return;
+        }
+        console.log(data.body);
+    
+        setClasses(data.body);
+    }
 
     const toClass = (className) => {
         navigate('/class', { state: { name: className } });
@@ -115,7 +128,7 @@ export default function ClassList() {
                     </button>
                 </div>
 
-                {classes.map((item, index) => (
+                {classes && classes.map((item, index) => (
                     <button className="class-btn">
                         <div className="delete-btn-container">
                             <button className="delete-btn">

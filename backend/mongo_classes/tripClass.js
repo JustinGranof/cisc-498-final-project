@@ -46,6 +46,32 @@ class Trips extends mongoDbClass {
         return {'error': false, 'body': ''};
     }
 
+    //Get all trips
+    async getTrips(){
+        const TripsCollection = this.db.collection("Trips");
+
+        const query = {};
+
+        var trips = await TripsCollection.find().toArray();
+
+        if (trips){
+
+            for (var i = 0; i < trips.length; i++){ //Search for student
+                if (trips[i].Students){
+                    trips[i]['size'] = trips[i]['Students'].length;
+                }
+                else {
+                    trips[i]['size'] = 0;
+                }
+            }
+            
+            return {'error': false, 'body': trips};
+        }
+        else {
+            return {'error': true, 'body': 'Not found.'};
+        }
+    }
+
     //Gets a trip
     async getTrip(id){
         const TripsCollection = this.db.collection("Trips");
@@ -80,6 +106,23 @@ class Trips extends mongoDbClass {
         return {'error': true, 'body': 'Not Found'}; //Not found error
     }
 
+    async getStudents(tripId){
+        const TripsCollection = this.db.collection("Trips");
+
+        const query = { _id: require('mongodb').ObjectId(tripId)};
+
+        var trip = await this.getTrip(tripId); //Gets trip
+        
+
+        if (trip.body && trip.body.Students){
+            var students = trip.body.Students;
+            return {'error': false, 'body': trip.body.Students};
+        }
+        else {
+            return {'error': true, 'body': 'Not found.'};
+        }
+    }
+
     async updateStudent(id, tripId, doc) {
         const TripsCollection = this.db.collection("Trips");
 
@@ -103,8 +146,6 @@ class Trips extends mongoDbClass {
             }
             updateDoc['Students.$.'+field] = doc[field];
         }
-
-        console.log(updateDoc);
 
         try {
             TripsCollection.updateOne(

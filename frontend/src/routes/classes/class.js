@@ -7,28 +7,47 @@ import request from "../../utils/Request";
 
 export default function Class() {
 
+    var tripId = "623cac53c071a74d9056f69a";
+
     const [query, setQuery] = useState("")
     const [value, setValue] = useState('yes');
     const location = useLocation();
     const [search, setSearch] = useState("");
+    const [students, setStudents] = useState(undefined);
+
+    useEffect(() => {
+       getStudents();
+    }, []);
+
+    async function getStudents() {
+        let data = await request("POST", "trip/students/get", {tripID: tripId}, true);
+    
+        if (!data.success) {
+          alert("Error getting class information.");
+          return;
+        }
+        console.log(data.body);
+    
+        setStudents(data.body);
+    }
 
 
     // get data for {location.state.name}
     // example data
-    const students = [
-        { "id": 1, "firstName": "Kim", "lastName": "Kardashian", "email": "abc@gmail.com", "phone": "613-849-3928" },
-        { "id": 2, "firstName": "Pete", "lastName": "Davidson", "email": "abc@gmail.com", "phone": "613-849-3928" },
-        { "id:": 3, "firstName": "Kanye", "lastName": "West", "email": "abc@gmail.com", "phone": "613-849-3928" },
-        { "id": 4, "firstName": "North", "lastName": "West", "email": "abc@gmail.com", "phone": "613-849-3928" },
-        { "id": 5, "firstName": "Miley", "lastName": "Cyrus", "email": "abc@gmail.com", "phone": "613-849-3928" },
-        { "id": 6, "firstName": "Asap", "lastName": "Rocky", "email": "abc@gmail.com", "phone": "613-849-3928" },
-        { "id": 7, "firstName": "Selena", "lastName": "Gomez", "email": "abc@gmail.com", "phone": "613-849-3928" },
-    ]
+    // const students = [
+    //     { "id": 1, "firstName": "Kim", "lastName": "Kardashian", "email": "abc@gmail.com", "phone": "613-849-3928" },
+    //     { "id": 2, "firstName": "Pete", "lastName": "Davidson", "email": "abc@gmail.com", "phone": "613-849-3928" },
+    //     { "id:": 3, "firstName": "Kanye", "lastName": "West", "email": "abc@gmail.com", "phone": "613-849-3928" },
+    //     { "id": 4, "firstName": "North", "lastName": "West", "email": "abc@gmail.com", "phone": "613-849-3928" },
+    //     { "id": 5, "firstName": "Miley", "lastName": "Cyrus", "email": "abc@gmail.com", "phone": "613-849-3928" },
+    //     { "id": 6, "firstName": "Asap", "lastName": "Rocky", "email": "abc@gmail.com", "phone": "613-849-3928" },
+    //     { "id": 7, "firstName": "Selena", "lastName": "Gomez", "email": "abc@gmail.com", "phone": "613-849-3928" },
+    // ]
 
     async function deleteStudent(email) {
         let data = await request(
             "POST",
-            "user/delete",
+            "trip/student/delete",
             { email: email },
             true
         );
@@ -42,13 +61,17 @@ export default function Class() {
     }
 
     function studentList() {
+        if (students == undefined){
+            return "loading";
+        }
         return students.map((student, index) => {
-            const { id, firstName, lastName, email, phone } = student
-            const name = firstName.toLowerCase() + " " + lastName.toLowerCase()
+            const { id, name, email, phone } = student;
+
+
             if (!name.includes(search.toLowerCase())) return;
             return (
                 <tr key={id}>
-                    <td>{lastName}, {firstName}</td>
+                    <td>{name}</td>
                     <td>{email}</td>
                     <td>{phone}</td>
                     <td>
@@ -56,7 +79,7 @@ export default function Class() {
                             if (
                                 window.confirm(
                                     "Are you sure you want to delete " +
-                                    firstName + " " + lastName +
+                                    name +
                                     "?"
                                 )
                             ) deleteStudent(email)

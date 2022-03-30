@@ -39,7 +39,6 @@ function Students() {
       { studentID: studentId, tripID: tripId },
       true
     );
-    console.log(data);
 
     if (!data.success) {
       alert("Error getting student information.");
