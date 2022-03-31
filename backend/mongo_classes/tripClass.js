@@ -5,6 +5,7 @@
  */
 
 const mongoDbClass = require("./dbClass");
+const ObjectId = require("mongodb").ObjectId;
 
 class Trips extends mongoDbClass {
   constructor() {
@@ -51,10 +52,10 @@ class Trips extends mongoDbClass {
     } catch (error) {
       return { error: true, body: "Trip details missing." };
     }
-    insertDoc._id = require("mongodb").ObjectId();
+    insertDoc._id = ObjectId();
 
     TripsCollection.updateOne(
-      { _id: require("mongodb").ObjectId(tripId) },
+      { _id: ObjectId(tripId) },
       { $push: { Students: doc } }
     );
 
@@ -89,7 +90,7 @@ class Trips extends mongoDbClass {
   async getTrip(id) {
     const TripsCollection = this.db.collection("Trips");
 
-    const query = { _id: require("mongodb").ObjectId(id) };
+    const query = { _id: ObjectId(id) };
 
     const trip = await TripsCollection.findOne(query, {});
 
@@ -99,7 +100,7 @@ class Trips extends mongoDbClass {
   async getStudent(id, tripId) {
     const TripsCollection = this.db.collection("Trips");
 
-    const query = { _id: require("mongodb").ObjectId(tripId) };
+    const query = { _id: ObjectId(tripId) };
 
     var trip = await this.getTrip(tripId); //Gets trip
 
@@ -111,7 +112,7 @@ class Trips extends mongoDbClass {
         //Search for student
         if (
           trip.Students[i]._id &&
-          require("mongodb").ObjectId(trip.Students[i]._id).toString() == id
+          ObjectId(trip.Students[i]._id).toString() == id
         ) {
           return { error: false, body: trip.Students[i], index: i };
         }
@@ -124,7 +125,7 @@ class Trips extends mongoDbClass {
   async getStudents(tripId) {
     const TripsCollection = this.db.collection("Trips");
 
-    const query = { _id: require("mongodb").ObjectId(tripId) };
+    const query = { _id: ObjectId(tripId) };
 
     var trip = await this.getTrip(tripId); //Gets trip
 
@@ -156,11 +157,13 @@ class Trips extends mongoDbClass {
       }
     }
 
+    doc._id = ObjectId(doc._id);
+
     try {
       TripsCollection.updateOne(
         {
-          _id: require("mongodb").ObjectId(tripId),
-          "Students._id": student._id,
+          _id: ObjectId(tripId),
+          "Students._id": ObjectId(student._id),
         },
         { $set: { "Students.$": doc } }
       );
@@ -177,8 +180,8 @@ class Trips extends mongoDbClass {
 
     try {
       TripsCollection.updateOne(
-        { "Students._id": require("mongodb").ObjectId(id) },
-        { $pull: { Students: { _id: require("mongodb").ObjectId(id) } } }
+        { "Students._id": ObjectId(id) },
+        { $pull: { Students: { _id: ObjectId(id) } } }
       );
     } catch (error) {
       return { error: true, body: "Delete Failed." };
@@ -191,7 +194,7 @@ class Trips extends mongoDbClass {
     const TripsCollection = this.db.collection("Trips");
 
     try {
-      TripsCollection.deleteOne({ _id: require("mongodb").ObjectId(id) });
+      TripsCollection.deleteOne({ _id: ObjectId(id) });
     } catch (error) {
       return { error: true, body: "Delete Failed." };
     }
