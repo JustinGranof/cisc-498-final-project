@@ -39,7 +39,7 @@ class Trips extends mongoDbClass {
        
 
         var insertDoc;
-        console
+
 
         try {
             //These are the mandatory paramaters, if one is missing it will fail
@@ -56,7 +56,6 @@ class Trips extends mongoDbClass {
         }
         insertDoc._id = require('mongodb').ObjectId();
 
-        console.log(insertDoc);
 
         TripsCollection.updateOne(
             {_id: require('mongodb').ObjectId(tripId)},
@@ -175,6 +174,43 @@ class Trips extends mongoDbClass {
         }
         catch(error) {
             return {'error': true, 'body': 'Update failed.'};
+        }
+
+        return {'error': false, 'body': ''};
+        
+    }
+
+    async deleteStudent(id) {
+        const TripsCollection = this.db.collection("Trips");
+
+
+
+        try {
+            TripsCollection.updateOne(
+                {'Students._id': require('mongodb').ObjectId(id)},
+                {$pull: {"Students": {"_id": require('mongodb').ObjectId(id)}}}
+            );
+        }
+        catch(error) {
+
+            return {'error': true, 'body': 'Delete Failed.'};
+        }
+
+        return {'error': false, 'body': ''};
+        
+    }
+
+    async deleteTrip(id) {
+        const TripsCollection = this.db.collection("Trips");
+
+        try {
+            TripsCollection.deleteOne(
+                {"_id": require('mongodb').ObjectId(id)}
+            );
+        }
+        catch(error) {
+
+            return {'error': true, 'body': 'Delete Failed.'};
         }
 
         return {'error': false, 'body': ''};

@@ -48,11 +48,13 @@ export default function ClassList() {
     //}
   }
 
-  async function deleteClass(name) {
-    let data = await request("POST", "class/delete", { name: name }, true);
+  async function deleteClass(id) {
+
+    let data = await request("POST", "trip/delete", { id: id }, true);
     // if (data) {
     //   //get Data
     // }
+    getClasses();
   }
 
   // Display classes
@@ -126,10 +128,10 @@ export default function ClassList() {
                     onClick={(e) => {
                       if (
                         window.confirm(
-                          "Are you sure you want to delete " + item.name + "?"
+                          "Are you sure you want to delete " + item.name + "? This will delete all the students in the trip."
                         )
                       )
-                        deleteClass(item.name);
+                        deleteClass(item._id);
                     }}
                   ></RiDeleteBinFill>
                 </button>

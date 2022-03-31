@@ -30,6 +30,20 @@ router.post("/create", async (req, res) => {
 
 });
 
+router.post("/delete", async (req, res) => {
+    let Trip = new Trips();
+
+    const response = await Trip.deleteTrip(req.body.id);
+
+    if (response.error){
+        res.send({ success: false, body: response.body });
+    }
+    else {
+        res.send({success:true, body: response.body});
+    }
+
+});
+
 router.post("/student/get", async (req, res) => {
     let Trip = new Trips();
 
@@ -54,6 +68,20 @@ router.post("/students/get", async (req, res) => {
     }
     else {
         res.send({success:true, body: response.body})
+    }
+
+});
+
+router.post("/student/delete", async (req, res) => {
+    let Trip = new Trips();
+
+    const response = await Trip.deleteStudent(req.body.id);
+
+    if (response.error){
+        res.send({ success: false, body: response.body });
+    }
+    else {
+        res.send({success:true, body: response.body});
     }
 
 });
