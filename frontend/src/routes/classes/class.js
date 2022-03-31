@@ -91,16 +91,28 @@ export default function Class() {
 
       if (!name.includes(search.toLowerCase())) return;
       return (
-        <tr
-          onClick={() => {
-            navigate("/classes/" + tripID + "/" + _id);
-          }}
-          className="class-student-row"
-          key={_id}
-        >
-          <td>{name}</td>
-          <td>{email}</td>
-          <td>{phone}</td>
+        <tr className="class-student-row" key={_id}>
+          <td
+            onClick={() => {
+              navigate("/classes/" + tripID + "/" + _id);
+            }}
+          >
+            {name}
+          </td>
+          <td
+            onClick={() => {
+              navigate("/classes/" + tripID + "/" + _id);
+            }}
+          >
+            {email}
+          </td>
+          <td
+            onClick={() => {
+              navigate("/classes/" + tripID + "/" + _id);
+            }}
+          >
+            {phone}
+          </td>
           <td>
             <button
               onClick={() => {
@@ -171,7 +183,6 @@ export default function Class() {
         </div>
       </div>
       {copied && <p>Copied to clipboard!</p>}
-
       <div className="search-container">
         <label htmlFor="search">Search</label>
         <br />
