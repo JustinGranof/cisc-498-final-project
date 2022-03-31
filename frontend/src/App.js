@@ -66,32 +66,58 @@ function App() {
   return (
     <>
       <Router>
-        {!auth ? (
-          /* Login Flow */
-          <>
-            <Routes>
+        <Routes>
+          <Route path="/form/:tripID" element={<StudentForm />} />
+          {!auth ? (
+            /* Login Flow */
+            <>
               <Route path="/login" element={<Login />} />
               <Route path="/reset-password" element={<Reset />} />
               <Route path="*" element={<Navigate to="/login" />} />
-            </Routes>
-          </>
-        ) : (
-          /* App Flow */
-          <>
-            {!document.location.pathname.includes("/form/") && <NavBar />}
-            <Routes>
-              <Route path="/classes" element={<ClassList />} />
-              <Route path="/classes/:tripID" element={<Class />} />
+            </>
+          ) : (
+            /* App Flow */
+            <>
+              <Route
+                path="/classes"
+                element={
+                  <>
+                    <NavBar />
+                    <ClassList />
+                  </>
+                }
+              />
+              <Route
+                path="/classes/:tripID"
+                element={
+                  <>
+                    <NavBar />
+                    <Class />
+                  </>
+                }
+              />
               <Route
                 path="/classes/:tripID/:studentID"
-                element={<Students />}
+                element={
+                  <>
+                    <NavBar />
+                    <Students />
+                  </>
+                }
               />
-              <Route path="/form/:tripID" element={<StudentForm />} />
-              <Route path="/admins" element={<Admins />} />
+              <Route
+                path="/admins"
+                element={
+                  <>
+                    <NavBar />
+                    <Admins />
+                  </>
+                }
+              />
               <Route path="*" element={<Navigate to="/classes" />} />
-            </Routes>
-          </>
-        )}
+            </>
+          )}
+        </Routes>
       </Router>
     </>
   );
