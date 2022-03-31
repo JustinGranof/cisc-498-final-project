@@ -44,8 +44,6 @@ function Students() {
     setStudent(data.body);
   }
 
-  console.log(student);
-
   async function updateStudent() {
     let data = await request(
       "POST",

@@ -29,7 +29,6 @@ export default function Class() {
     );
 
     if (!data.success) {
-      console.log("HERE");
       setStudents(false);
     } else {
       if (data.body) {

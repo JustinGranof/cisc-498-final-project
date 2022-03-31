@@ -11,7 +11,6 @@ const authRouter = require("./routes/auth.js").router;
 const accountRouter = require("./routes/account").router;
 const tripRouter = require("./routes/trip").router;
 
-
 const PORT = 3001;
 
 app.use(cors);
@@ -65,14 +64,11 @@ app.get("/test", (req, res) => {
     description: "test_Descr",
   };
 
-  var insertStatus = Trip.createStudent(doc, '623cac53c071a74d9056f69a');
+  var insertStatus = Trip.createStudent(doc, "623cac53c071a74d9056f69a");
   if (insertStatus.error == true) {
     errorMessage(res, insertStatus);
     return;
   }
-
-  console.log("HERE");
-
 
   res.send("Hello World");
 
@@ -104,9 +100,6 @@ app.get("/createTestUser", (req, res) => {
 
   res.send("Hello World");
 });
-
-
-
 
 app.listen(PORT, async () => {
   console.log("Server listening at port 3001");
