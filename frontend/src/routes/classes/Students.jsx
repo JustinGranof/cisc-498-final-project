@@ -50,7 +50,7 @@ function Students() {
     let data = await request(
       "POST",
       "trip/student/update",
-      { studentID: studentID, tripID: tripID, data: { name: student.name } },
+      { studentID: studentID, tripID: tripID, data: student },
       true
     );
 
@@ -70,6 +70,7 @@ function Students() {
   };
 
   const handleClick2 = () => {
+    if (!isDisabled2) updateStudent();
     setIsDisabled2(!isDisabled2);
   };
 

@@ -2,221 +2,202 @@
  * Class handles the trip/class collection in the database
  * All database transactions are initiated in this class
  * Enforces the schema and other restrictions
-*/
+ */
 
 const mongoDbClass = require("./dbClass");
 
 class Trips extends mongoDbClass {
-    constructor(){
-        super()
-        this.connect()
+  constructor() {
+    super();
+    this.connect();
+  }
+
+  createTrip(doc) {
+    const TripsCollection = this.db.collection("Trips");
+    var insertDoc;
+
+    try {
+      //These are the mandatory paramaters, if one is missing it will fail
+      insertDoc = {
+        name: doc.name,
+      };
+      //Can check for validitity (Like uniqueness) here
+      //Some paramaters can be optionally added with if statements
+      //All invalid parameters will be ignored
+    } catch (error) {
+      return { error: true, body: "Trip details missing." };
     }
+    //insertDoc['Students'] = [];
+    const result = TripsCollection.insertOne(insertDoc);
 
-    createTrip(doc){
-        const TripsCollection = this.db.collection("Trips");
-        var insertDoc;
+    return { error: false, body: "" };
+  }
 
-        try {
-            //These are the mandatory paramaters, if one is missing it will fail
-            insertDoc = {
-                "name": doc.name,
-            }
-            //Can check for validitity (Like uniqueness) here
-            //Some paramaters can be optionally added with if statements
-            //All invalid parameters will be ignored
-        } catch (error) {
-            return {'error': true, 'body': 'Trip details missing.'};
-        }
-        //insertDoc['Students'] = [];
-        const result = TripsCollection.insertOne(insertDoc);
+  createStudent(doc, tripId) {
+    const TripsCollection = this.db.collection("Trips");
 
-        return {'error': false, 'body': ''};
-    }
+    var insertDoc;
 
-
-    createStudent(doc, tripId){
-        const TripsCollection = this.db.collection("Trips");
-       
-
-        var insertDoc;
-
-
-        try {
-            //These are the mandatory paramaters, if one is missing it will fail
-            /*insertDoc = {
+    try {
+      //These are the mandatory paramaters, if one is missing it will fail
+      /*insertDoc = {
                 "name": doc.name,
                 "email": doc.contact.email
             }*/
-            insertDoc = doc;
-            //Can check for validitity (Like uniqueness) here
-            //Some paramaters can be optionally added with if statements
-            //All invalid parameters will be ignored
-        } catch (error) {
-            return {'error': true, 'body': 'Trip details missing.'};
+      insertDoc = doc;
+      //Can check for validitity (Like uniqueness) here
+      //Some paramaters can be optionally added with if statements
+      //All invalid parameters will be ignored
+    } catch (error) {
+      return { error: true, body: "Trip details missing." };
+    }
+    insertDoc._id = require("mongodb").ObjectId();
+
+    TripsCollection.updateOne(
+      { _id: require("mongodb").ObjectId(tripId) },
+      { $push: { Students: doc } }
+    );
+
+    return { error: false, body: "" };
+  }
+
+  //Get all trips
+  async getTrips() {
+    const TripsCollection = this.db.collection("Trips");
+
+    const query = {};
+
+    var trips = await TripsCollection.find().toArray();
+
+    if (trips) {
+      for (var i = 0; i < trips.length; i++) {
+        //Search for student
+        if (trips[i].Students) {
+          trips[i]["numStudents"] = trips[i]["Students"].length;
+        } else {
+          trips[i]["numStudents"] = 0;
         }
-        insertDoc._id = require('mongodb').ObjectId();
+      }
 
+      return { error: false, body: trips };
+    } else {
+      return { error: true, body: "Not found." };
+    }
+  }
 
-        TripsCollection.updateOne(
-            {_id: require('mongodb').ObjectId(tripId)},
-            {$push: {Students: doc}}
-        );
+  //Gets a trip
+  async getTrip(id) {
+    const TripsCollection = this.db.collection("Trips");
 
-        return {'error': false, 'body': ''};
+    const query = { _id: require("mongodb").ObjectId(id) };
+
+    const trip = await TripsCollection.findOne(query, {});
+
+    return { error: false, body: trip };
+  }
+
+  async getStudent(id, tripId) {
+    const TripsCollection = this.db.collection("Trips");
+
+    const query = { _id: require("mongodb").ObjectId(tripId) };
+
+    var trip = await this.getTrip(tripId); //Gets trip
+
+    trip = trip.body;
+
+    if (trip && trip.Students) {
+      //If students exist
+      for (var i = 0; i < trip.Students.length; i++) {
+        //Search for student
+        if (
+          trip.Students[i]._id &&
+          require("mongodb").ObjectId(trip.Students[i]._id).toString() == id
+        ) {
+          return { error: false, body: trip.Students[i], index: i };
+        }
+      }
     }
 
-    //Get all trips
-    async getTrips(){
-        const TripsCollection = this.db.collection("Trips");
+    return { error: true, body: "Not Found" }; //Not found error
+  }
 
-        const query = {};
+  async getStudents(tripId) {
+    const TripsCollection = this.db.collection("Trips");
 
-        var trips = await TripsCollection.find().toArray();
+    const query = { _id: require("mongodb").ObjectId(tripId) };
 
-        if (trips){
+    var trip = await this.getTrip(tripId); //Gets trip
 
-            for (var i = 0; i < trips.length; i++){ //Search for student
-                if (trips[i].Students){
-                    trips[i]['numStudents'] = trips[i]['Students'].length;
-                }
-                else {
-                    trips[i]['numStudents'] = 0;
-                }
-            }
-            
-            return {'error': false, 'body': trips};
-        }
-        else {
-            return {'error': true, 'body': 'Not found.'};
-        }
+    if (trip.body && trip.body.Students) {
+      var students = trip.body.Students;
+      return { error: false, body: trip.body.Students };
+    } else {
+      return { error: true, body: "Not found." };
+    }
+  }
+
+  async updateStudent(id, tripId, doc) {
+    const TripsCollection = this.db.collection("Trips");
+
+    var student = await this.getStudent(id, tripId); //Will fail if student does not exist
+    if (student.error) {
+      return { error: true, body: "Update failed." };
+    }
+    student = student.body;
+
+    for (var field in doc) {
+      if (!student[field]) {
+        return { error: true, body: "Update failed." };
+      }
+      try {
+        student[field] = doc[field]; //Will fail for invalid fields
+      } catch (error) {
+        return { error: true, body: "Update failed." };
+      }
     }
 
-    //Gets a trip
-    async getTrip(id){
-        const TripsCollection = this.db.collection("Trips");
-
-        const query = { _id: require('mongodb').ObjectId(id)};
-
-        const trip = await TripsCollection.findOne(query, {});
-
-        return {'error': false, 'body': trip};
+    try {
+      TripsCollection.updateOne(
+        {
+          _id: require("mongodb").ObjectId(tripId),
+          "Students._id": student._id,
+        },
+        { $set: { "Students.$": doc } }
+      );
+    } catch (error) {
+      console.log(error);
+      return { error: true, body: "Update failed." };
     }
 
-    async getStudent(id, tripId){
-        const TripsCollection = this.db.collection("Trips");
+    return { error: false, body: "" };
+  }
 
-        const query = { _id: require('mongodb').ObjectId(tripId)};
+  async deleteStudent(id) {
+    const TripsCollection = this.db.collection("Trips");
 
-        var trip = await this.getTrip(tripId); //Gets trip
-
-
-        trip = trip.body;
-
-        if (trip && trip.Students){ //If students exist
-            for (var i = 0; i < trip.Students.length; i++){ //Search for student
-                if (trip.Students[i]._id && require('mongodb').ObjectId(trip.Students[i]._id).toString() == id){
-                    return {'error': false, 'body': trip.Students[i], index: i};
-                }
-            }
-        }
-
-        
-
-        return {'error': true, 'body': 'Not Found'}; //Not found error
+    try {
+      TripsCollection.updateOne(
+        { "Students._id": require("mongodb").ObjectId(id) },
+        { $pull: { Students: { _id: require("mongodb").ObjectId(id) } } }
+      );
+    } catch (error) {
+      return { error: true, body: "Delete Failed." };
     }
 
-    async getStudents(tripId){
-        const TripsCollection = this.db.collection("Trips");
+    return { error: false, body: "" };
+  }
 
-        const query = { _id: require('mongodb').ObjectId(tripId)};
+  async deleteTrip(id) {
+    const TripsCollection = this.db.collection("Trips");
 
-        var trip = await this.getTrip(tripId); //Gets trip
-        
-
-        if (trip.body && trip.body.Students){
-            var students = trip.body.Students;
-            return {'error': false, 'body': trip.body.Students};
-        }
-        else {
-            return {'error': true, 'body': 'Not found.'};
-        }
+    try {
+      TripsCollection.deleteOne({ _id: require("mongodb").ObjectId(id) });
+    } catch (error) {
+      return { error: true, body: "Delete Failed." };
     }
 
-    async updateStudent(id, tripId, doc) {
-        const TripsCollection = this.db.collection("Trips");
-
-        var student = await this.getStudent(id, tripId); //Will fail if student does not exist
-        if (student.error){
-            return {'error': true, 'body': 'Update failed.'};
-        }
-        var index = student.index;
-        student = student.body;
-
-        var updateDoc = {};
-        for (var field in doc){
-            if (!student[field]){
-                return {'error': true, 'body': 'Update failed.'};
-            }
-            try {
-                student[field] = doc[field]; //Will fail for invalid fields
-            }
-            catch (error){
-                return {'error': true, 'body': 'Update failed.'};
-            }
-            updateDoc['Students.$.'+field] = doc[field];
-        }
-
-        try {
-            TripsCollection.updateOne(
-                {_id: require('mongodb').ObjectId(tripId), 'Students._id': require('mongodb').ObjectId(id)},
-                {$set: updateDoc}
-            );
-        }
-        catch(error) {
-            return {'error': true, 'body': 'Update failed.'};
-        }
-
-        return {'error': false, 'body': ''};
-        
-    }
-
-    async deleteStudent(id) {
-        const TripsCollection = this.db.collection("Trips");
-
-
-
-        try {
-            TripsCollection.updateOne(
-                {'Students._id': require('mongodb').ObjectId(id)},
-                {$pull: {"Students": {"_id": require('mongodb').ObjectId(id)}}}
-            );
-        }
-        catch(error) {
-
-            return {'error': true, 'body': 'Delete Failed.'};
-        }
-
-        return {'error': false, 'body': ''};
-        
-    }
-
-    async deleteTrip(id) {
-        const TripsCollection = this.db.collection("Trips");
-
-        try {
-            TripsCollection.deleteOne(
-                {"_id": require('mongodb').ObjectId(id)}
-            );
-        }
-        catch(error) {
-
-            return {'error': true, 'body': 'Delete Failed.'};
-        }
-
-        return {'error': false, 'body': ''};
-        
-    }
-
+    return { error: false, body: "" };
+  }
 }
 
 module.exports = Trips;
