@@ -10,17 +10,6 @@ import { Link, useParams } from "react-router-dom";
 function Students() {
   const { tripID, studentID } = useParams();
 
-  const [name, setName] = useState("");
-  const [birth, setBirth] = useState("January 19, 2000");
-  const [height, setHeight] = useState("5'9");
-  const [gender, setGender] = useState("Male");
-
-  const [email, setEmail] = useState("Justin.granofsky@gmail.com");
-  const [number, setNumber] = useState("289-400-5070");
-  const [emergencyNumber, setEmergencyNumber] = useState("905-450-5070");
-  const [address, setAddress] = useState("3897 Lodi Rd.");
-  const [emergency, setEmergency] = useState("Mom");
-
   const [isDisabled, setIsDisabled] = useState(true);
   const [isDisabled2, setIsDisabled2] = useState(true);
 
@@ -61,7 +50,7 @@ function Students() {
     let data = await request(
       "POST",
       "trip/student/update",
-      { studentID: studentID, tripID: tripID, data: { name: name } },
+      { studentID: studentID, tripID: tripID, data: { name: student.name } },
       true
     );
 
@@ -241,7 +230,9 @@ function Students() {
                     type="text"
                     value={student.contact.relationship}
                     disabled={isDisabled2}
-                    onChange={(e) => setAddress(e.target.value)}
+                    onChange={(e) =>
+                      update("relationship", e.target.value, "contact")
+                    }
                   />
                 </form>
               </div>
