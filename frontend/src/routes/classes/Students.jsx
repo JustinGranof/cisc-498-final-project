@@ -4,10 +4,8 @@ import edit from "../../img/edit.png";
 import update from "../../img/save.png";
 import request from "../../utils/Request";
 
-import NavBar from "../../utils/NavBar";
-
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function Students() {
   const { tripID, studentID } = useParams();
@@ -26,11 +24,20 @@ function Students() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [isDisabled2, setIsDisabled2] = useState(true);
 
+  const [student, setStudent] = useState();
+
   // Component did mount
   useEffect(() => {
     // Get the student data
     getStudentData();
   }, []);
+
+  function update(key, value, parent = null) {
+    let temp = { ...student };
+    if (parent) temp[parent][key] = value;
+    else temp[key] = value;
+    setStudent(temp);
+  }
 
   async function getStudentData() {
     let data = await request(
@@ -45,8 +52,10 @@ function Students() {
       return;
     }
 
-    setName(data.body.name);
+    setStudent(data.body);
   }
+
+  console.log(student);
 
   async function updateStudent() {
     let data = await request(
@@ -75,6 +84,10 @@ function Students() {
     setIsDisabled2(!isDisabled2);
   };
 
+  if (!student) {
+    return null;
+  }
+
   return (
     <>
       <div className="main-div">
@@ -86,11 +99,11 @@ function Students() {
         <div className="">
           <div className="flbox">
             <img className="img-1" src={profile} height={34} />
-            <h2>Granofsky, Justin</h2>
+            <h2>{student.name}</h2>
           </div>
           <div className="grid-container-2">
             <div className="flbox">
-              <p className="heading-2">Medical Information</p>
+              <p className="heading-2">Student Information</p>
             </div>
             {isDisabled == true && (
               <div className="flbox-1">
@@ -110,59 +123,71 @@ function Students() {
             )}
           </div>
 
-          <div className="medical">
-            <div className="flbox-2">
-              <h4 className="med-header">Full Name:</h4>
-              <form>
-                <input
-                  type="text"
-                  value={name}
-                  disabled={isDisabled}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </form>
+          <div className="medical-container">
+            <div className="medical">
+              <div className="flbox-2">
+                <h4 className="med-header">Email:</h4>
+                <form>
+                  <input
+                    type="text"
+                    value={student.email}
+                    disabled={isDisabled}
+                    onChange={(e) => update("email", e.target.value)}
+                  />
+                </form>
+              </div>
+              <div className="flbox-2">
+                <h4 className="med-header">Date of Birth:</h4>
+                <form>
+                  <input
+                    type="date"
+                    value={student.dob}
+                    disabled={isDisabled}
+                    onChange={(e) => update("dob", e.target.value)}
+                  />
+                </form>
+              </div>
+              <div className="flbox-2">
+                <h4 className="med-header">Phone Number:</h4>
+                <form>
+                  <input
+                    type="text"
+                    value={student.phone}
+                    disabled={isDisabled}
+                    onChange={(e) => update("phone", e.target.value)}
+                  />
+                </form>
+              </div>
+              <div className="flbox-2">
+                <h4 className="med-header">Gender:</h4>
+                <form>
+                  <select
+                    id="gender"
+                    name="gender"
+                    disabled={isDisabled}
+                    value={student.gender}
+                    onChange={(e) => update("gender", e.target.value)}
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </form>
+              </div>
             </div>
-            <div className="flbox-2">
-              <h4 className="med-header">Date of Birth:</h4>
-              <form>
-                <input
-                  type="text"
-                  value={birth}
-                  disabled={isDisabled}
-                  onChange={(e) => setBirth(e.target.value)}
-                />
-              </form>
-            </div>
-            <div className="flbox-2">
-              <h4 className="med-header">Height:</h4>
-              <form>
-                <input
-                  type="text"
-                  value={height}
-                  disabled={isDisabled}
-                  onChange={(e) => setHeight(e.target.value)}
-                />
-              </form>
-            </div>
-            <div className="flbox-2">
-              <h4 className="med-header">Gender:</h4>
-              <form>
-                <select
-                  id="gender"
-                  name="gender"
-                  disabled={isDisabled}
-                  onChange={(e) => setGender(e.target.value)}
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-              </form>
+            <div className="form-control">
+              <h4 className="med-header">Medical Information:</h4>
+              <textarea
+                rows={4}
+                disabled={isDisabled}
+                value={student.medical}
+                onChange={(e) => update("medical", e.target.value)}
+              />
             </div>
           </div>
           <div className="grid-container-2">
             <div className="flbox">
-              <p className="heading-2">Contact Information</p>
+              <p className="heading-2">Emergency Contact Information</p>
             </div>
             {isDisabled2 == true && (
               <div className="flbox-1">
@@ -182,65 +207,54 @@ function Students() {
             )}
           </div>
 
-          <div className="medical">
-            <div className="flbox-2">
-              <h4 className="med-header">Email:</h4>
-              <form>
-                <input
-                  type="text"
-                  value={email}
-                  disabled={isDisabled2}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </form>
-            </div>
-            <div className="flbox-2">
-              <h4 className="med-header">Phone Number:</h4>
-              <form>
-                <input
-                  type="tel"
-                  maxLength="12"
-                  pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
-                  value={number}
-                  disabled={isDisabled2}
-                  onChange={(e) => setNumber(e.target.value)}
-                />
-              </form>
-            </div>
-            <div className="flbox-2">
-              <h4 className="med-header">Address:</h4>
-              <form>
-                <input
-                  type="text"
-                  value={address}
-                  disabled={isDisabled2}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-              </form>
-            </div>
-            <div className="flbox-2">
-              <h4 className="med-header">Emergency Contact Name:</h4>
-              <form>
-                <input
-                  type="text"
-                  value={emergency}
-                  disabled={isDisabled2}
-                  onChange={(e) => setEmergency(e.target.value)}
-                />
-              </form>
-            </div>
-            <div className="flbox-2">
-              <h4 className="med-header">Emergency Number:</h4>
-              <form>
-                <input
-                  type="tel"
-                  maxLength="12"
-                  pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
-                  value={emergencyNumber}
-                  disabled={isDisabled2}
-                  onChange={(e) => setEmergencyNumber(e.target.value)}
-                />
-              </form>
+          <div className="medical-container">
+            <div className="medical">
+              <div className="flbox-2">
+                <h4 className="med-header">Name:</h4>
+                <form>
+                  <input
+                    type="text"
+                    value={student.contact.name}
+                    disabled={isDisabled2}
+                    onChange={(e) => update("name", e.target.value, "contact")}
+                  />
+                </form>
+              </div>
+              <div className="flbox-2">
+                <h4 className="med-header">Phone Number:</h4>
+                <form>
+                  <input
+                    type="tel"
+                    maxLength="12"
+                    pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
+                    value={student.contact.phone}
+                    disabled={isDisabled2}
+                    onChange={(e) => update("phone", e.target.value, "contact")}
+                  />
+                </form>
+              </div>
+              <div className="flbox-2">
+                <h4 className="med-header">Relationship:</h4>
+                <form>
+                  <input
+                    type="text"
+                    value={student.contact.relationship}
+                    disabled={isDisabled2}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </form>
+              </div>
+              <div className="flbox-2">
+                <h4 className="med-header">Email:</h4>
+                <form>
+                  <input
+                    type="text"
+                    value={student.contact.email}
+                    disabled={isDisabled2}
+                    onChange={(e) => update("email", e.target.value, "contact")}
+                  />
+                </form>
+              </div>
             </div>
           </div>
         </div>
