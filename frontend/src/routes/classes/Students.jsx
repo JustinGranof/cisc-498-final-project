@@ -2,6 +2,7 @@ import "./StudentOverview.css";
 import profile from "../../img/Profile.png";
 import edit from "../../img/edit.png";
 import updateImg from "../../img/save.png";
+import emailIcon from "../../img/email.svg";
 import request from "../../utils/Request";
 
 import { useState, useEffect } from "react";
@@ -123,6 +124,14 @@ function Students() {
                     onChange={(e) => update("email", e.target.value)}
                   />
                 </form>
+                <a href={"mailto:" + student.email}>
+                  <img
+                    style={{ marginLeft: "15px" }}
+                    className="email-icon"
+                    src={emailIcon}
+                    alt=""
+                  />
+                </a>
               </div>
               <div className="flbox-2">
                 <h4 className="med-header">Date of Birth:</h4>
@@ -245,6 +254,14 @@ function Students() {
                     onChange={(e) => update("email", e.target.value, "contact")}
                   />
                 </form>
+                <a href={"mailto:" + student.contact.email}>
+                  <img
+                    style={{ marginLeft: "15px" }}
+                    className="email-icon"
+                    src={emailIcon}
+                    alt=""
+                  />
+                </a>
               </div>
             </div>
           </div>

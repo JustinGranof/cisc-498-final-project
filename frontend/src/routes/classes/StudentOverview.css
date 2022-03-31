@@ -128,3 +128,12 @@ select {
 .med-header {
   margin-right: 5px;
 }
+
+.email-icon {
+  width: 30px;
+}
+
+.email-icon:hover {
+  cursor: pointer;
+  filter: invert(0.3);
+}
