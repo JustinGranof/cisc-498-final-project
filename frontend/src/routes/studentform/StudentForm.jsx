@@ -48,7 +48,6 @@ export default function StudentForm(props) {
   }
 
   function submit() {
-    console.log("SUBMIT:", data);
     if (!verify()) {
       // not filled out
       setError("Error: Please fill out all the required fields.");

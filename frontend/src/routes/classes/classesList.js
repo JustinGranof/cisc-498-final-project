@@ -26,7 +26,6 @@ export default function ClassList() {
       alert("Error getting class information.");
       return;
     }
-    console.log(data.body);
 
     setClasses(data.body);
   }
@@ -49,7 +48,6 @@ export default function ClassList() {
   }
 
   async function deleteClass(id) {
-
     let data = await request("POST", "trip/delete", { id: id }, true);
     // if (data) {
     //   //get Data
@@ -128,7 +126,9 @@ export default function ClassList() {
                     onClick={(e) => {
                       if (
                         window.confirm(
-                          "Are you sure you want to delete " + item.name + "? This will delete all the students in the trip."
+                          "Are you sure you want to delete " +
+                            item.name +
+                            "? This will delete all the students in the trip."
                         )
                       )
                         deleteClass(item._id);
