@@ -18,7 +18,7 @@ app.use(cors);
 app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/account", authenticateToken, accountRouter);
-app.use("/trip", tripRouter);
+app.use("/trip", authenticateToken, tripRouter);
 
 app.get("/", (req, res) => {
   res.send("You look lost.");

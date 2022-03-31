@@ -57,16 +57,18 @@ export default function Class() {
   //     { "id": 7, "firstName": "Selena", "lastName": "Gomez", "email": "abc@gmail.com", "phone": "613-849-3928" },
   // ]
 
-  async function deleteStudent(email) {
+  async function deleteStudent(id) {
     let data = await request(
       "POST",
       "trip/student/delete",
-      { email: email },
+      { id: id },
       true
     );
-    // if (data) {
-    //   //get Data
-    // }
+
+    if (!data.success) {
+        alert("Error deleting student.");
+        return;
+    }
   }
 
   async function getJoinLink() {
@@ -114,7 +116,7 @@ export default function Class() {
                     "Are you sure you want to delete " + name + "?"
                   )
                 )
-                  deleteStudent(email);
+                  deleteStudent(_id);
               }}
               className="delete-btn"
             >
