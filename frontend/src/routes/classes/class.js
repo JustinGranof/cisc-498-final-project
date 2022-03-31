@@ -77,25 +77,21 @@ export default function Class() {
   }
 
   async function emailAllEmergency() {
-
-    var mailList = '';
-    for (var i=0; i<students.length;i++){
-        mailList += students[i].contact.email+";";
+    var mailList = "";
+    for (var i = 0; i < students.length; i++) {
+      mailList += students[i].contact.email + ";";
     }
 
-    window.location.href = "mailto:"+mailList+"?subject=&body=";
-
+    window.location.href = "mailto:" + mailList + "?subject=&body=";
   }
 
   async function emailAllStudents() {
-
-    var mailList = '';
-    for (var i=0; i<students.length;i++){
-        mailList += students[i].email+";";
+    var mailList = "";
+    for (var i = 0; i < students.length; i++) {
+      mailList += students[i].email + ";";
     }
 
-    window.location.href = "mailto:"+mailList+"?subject=&body=";
-
+    window.location.href = "mailto:" + mailList + "?subject=&body=";
   }
 
   function studentList() {
@@ -187,35 +183,6 @@ export default function Class() {
         >
           Email All Emergency Students
         </button>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ margin: 10 }}>Allow new students to join</p>
-          <Switch
-            styles={{
-              track: {
-                backgroundColor: "gray",
-              },
-              trackChecked: {
-                backgroundColor: "#20E00F",
-              },
-              button: {
-                backgroundColor: "#F2F2F2",
-              },
-              buttonChecked: {
-                backgroundColor: "#F2F2F2",
-              },
-            }}
-            on="yes"
-            off="no"
-            value={value}
-            onChange={setValue}
-          />
-        </div>
       </div>
       {copied && <p>Copied to clipboard!</p>}
       <div className="search-container">

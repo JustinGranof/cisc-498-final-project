@@ -29,10 +29,25 @@
 }
 
 .header-bar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 50px;
+}
+
+@media screen and (max-width: 800px) {
+  .header-bar {
+    grid-template-columns: 1fr;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
+    padding: 5px;
+  }
+
+  .header-bar button {
+    width: 300px;
+    margin: 0 auto;
+  }
 }
 
 .student-table {
