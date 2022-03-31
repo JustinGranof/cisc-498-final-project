@@ -77,6 +77,17 @@ export default function Class() {
     return;
   }
 
+  async function emailAll() {
+
+    var mailList = '';
+    for (var i=0; i<students.length;i++){
+        mailList += students[i].contact.email+";";
+    }
+
+    window.location.href = "mailto:"+mailList+"?subject=&body=";
+
+  }
+
   function studentList() {
     if (students == undefined) {
       return "loading...";
@@ -149,6 +160,14 @@ export default function Class() {
           className="join-btn"
         >
           Get Student Join Link
+        </button>
+        <button
+          onClick={() => {
+            emailAll();
+          }}
+          className="join-btn"
+        >
+          Email All Emergency Contacts
         </button>
         <div
           style={{
