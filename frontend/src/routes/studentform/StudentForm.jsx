@@ -61,7 +61,9 @@ export default function StudentForm(props) {
       "trip/student/create",
       { tripID: tripID, data: data },
       true
-    );
+    ).then(() => {
+      setError("done");
+    });
   }
 
   return (
@@ -73,106 +75,115 @@ export default function StudentForm(props) {
             <h2>Queen's Rapid Response Form</h2>
             <link rel="stylesheet" type="text/css" href="classform.css" />
           </div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              submit();
-            }}
-            id="form"
-            className="form"
-          >
-            <h3>Contact Info</h3>
+          {error === "done" ? (
+            <div style={{ padding: "20px 40px" }}>
+              <h2>Thank you!</h2>
+              <h3>Your submission has successfully been sent.</h3>
+            </div>
+          ) : (
+            <>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  submit();
+                }}
+                id="form"
+                className="form"
+              >
+                <h3>Contact Info</h3>
 
-            <InputField
-              label="Full Name"
-              dataKey="name"
-              placeholder="Enter your full name..."
-              data={data}
-              update={updateData}
-            />
-            <InputField
-              label="Email"
-              dataKey="email"
-              placeholder="Enter your email address..."
-              data={data}
-              update={updateData}
-              type="email"
-            />
-            <InputField
-              label="Phone Number"
-              dataKey="phone"
-              placeholder="Enter your phone number..."
-              data={data}
-              update={updateData}
-            />
-            <div className="split">
-              <InputField
-                label="Date of Birth"
-                dataKey="dob"
-                placeholder="Enter your first name..."
-                data={data}
-                type={"date"}
-                update={updateData}
-              />
-              <InputField
-                label="Gender"
-                dataKey="gender"
-                data={data}
-                update={updateData}
-                type={"select"}
-                options={["Male", "Female", "Other"]}
-              />
-            </div>
-            <hr />
-            <h3>Emergency Contact Info</h3>
-            <InputField
-              label="Full Name"
-              dataKey="name"
-              parent="contact"
-              placeholder="Enter your contact's full name..."
-              data={data}
-              update={updateData}
-            />
-            <InputField
-              label="Email"
-              dataKey="email"
-              parent="contact"
-              placeholder="Enter your contact's email..."
-              data={data}
-              type={"email"}
-              update={updateData}
-            />
-            <div className="split">
-              <InputField
-                label="Relationship"
-                dataKey="relationship"
-                parent="contact"
-                placeholder="How are you related to this contact?"
-                data={data}
-                update={updateData}
-              />
-              <InputField
-                label="Phone Number"
-                dataKey="phone"
-                parent="contact"
-                placeholder="Enter your contact's phone number..."
-                data={data}
-                update={updateData}
-              />
-            </div>
-            <hr />
-            <h3>Medical Information</h3>
-            <InputField
-              data={data}
-              dataKey="medical"
-              label="Allergies, conditions, etc."
-              type="textarea"
-              update={updateData}
-              placeholder="Enter your medical information here..."
-            />
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <button type={"submit"}>Submit</button>
-          </form>
+                <InputField
+                  label="Full Name"
+                  dataKey="name"
+                  placeholder="Enter your full name..."
+                  data={data}
+                  update={updateData}
+                />
+                <InputField
+                  label="Email"
+                  dataKey="email"
+                  placeholder="Enter your email address..."
+                  data={data}
+                  update={updateData}
+                  type="email"
+                />
+                <InputField
+                  label="Phone Number"
+                  dataKey="phone"
+                  placeholder="Enter your phone number..."
+                  data={data}
+                  update={updateData}
+                />
+                <div className="split">
+                  <InputField
+                    label="Date of Birth"
+                    dataKey="dob"
+                    placeholder="Enter your first name..."
+                    data={data}
+                    type={"date"}
+                    update={updateData}
+                  />
+                  <InputField
+                    label="Gender"
+                    dataKey="gender"
+                    data={data}
+                    update={updateData}
+                    type={"select"}
+                    options={["Male", "Female", "Other"]}
+                  />
+                </div>
+                <hr />
+                <h3>Emergency Contact Info</h3>
+                <InputField
+                  label="Full Name"
+                  dataKey="name"
+                  parent="contact"
+                  placeholder="Enter your contact's full name..."
+                  data={data}
+                  update={updateData}
+                />
+                <InputField
+                  label="Email"
+                  dataKey="email"
+                  parent="contact"
+                  placeholder="Enter your contact's email..."
+                  data={data}
+                  type={"email"}
+                  update={updateData}
+                />
+                <div className="split">
+                  <InputField
+                    label="Relationship"
+                    dataKey="relationship"
+                    parent="contact"
+                    placeholder="How are you related to this contact?"
+                    data={data}
+                    update={updateData}
+                  />
+                  <InputField
+                    label="Phone Number"
+                    dataKey="phone"
+                    parent="contact"
+                    placeholder="Enter your contact's phone number..."
+                    data={data}
+                    update={updateData}
+                  />
+                </div>
+                <hr />
+                <h3>Medical Information</h3>
+                <InputField
+                  data={data}
+                  dataKey="medical"
+                  label="Allergies, conditions, etc."
+                  type="textarea"
+                  update={updateData}
+                  placeholder="Enter your medical information here..."
+                />
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                <button type={"submit"}>Submit</button>
+              </form>
+            </>
+          )}
         </div>
       </div>
     </>

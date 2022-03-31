@@ -130,3 +130,7 @@
   width: 100%;
   margin-top: 40px;
 }
+
+.form button:hover {
+  cursor: pointer;
+}
