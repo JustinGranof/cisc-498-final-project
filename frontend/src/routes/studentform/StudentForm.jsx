@@ -96,6 +96,7 @@ export default function StudentForm(props) {
               placeholder="Enter your email address..."
               data={data}
               update={updateData}
+              type="email"
             />
             <InputField
               label="Phone Number"
