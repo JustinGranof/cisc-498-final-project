@@ -84,10 +84,10 @@ export default function Class() {
       return "No students in this class yet";
     }
 
-    return students.map((student, index) => {
+    return students.map((student) => {
       const { _id, name, email, phone } = student;
 
-      if (!name.includes(search.toLowerCase())) return;
+      if (!name.toLowerCase().includes(search.toLowerCase())) return;
       return (
         <tr className="class-student-row" key={_id}>
           <td
