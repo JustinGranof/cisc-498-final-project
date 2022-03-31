@@ -65,7 +65,6 @@ function App() {
 
   return (
     <>
-      <NavBar />
       <Router>
         {!auth ? (
           /* Login Flow */
@@ -79,6 +78,7 @@ function App() {
         ) : (
           /* App Flow */
           <>
+            {!document.location.pathname.includes("/form/") && <NavBar />}
             <Routes>
               <Route path="/classes" element={<ClassList />} />
               <Route path="/classes/:tripID" element={<Class />} />

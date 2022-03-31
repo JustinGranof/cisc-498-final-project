@@ -39,12 +39,12 @@ export default function ClassList() {
     if (!name) return;
     let data = await request("POST", "trip/create", { name: name }, true);
     // check for unique class name
-   // if (data && data.success) {
-      setOpen(false);
+    // if (data && data.success) {
+    setOpen(false);
 
-      getClasses();
-   // } else {
-     // setError(data.body);
+    getClasses();
+    // } else {
+    // setError(data.body);
     //}
   }
 
@@ -99,9 +99,6 @@ export default function ClassList() {
       </Modal>
 
       <div className="classes-container">
-        <p className="logout">
-          <Link to="/logout">Logout</Link>
-        </p>
         <div className="header-container">
           <h1>Classes</h1>
           <button

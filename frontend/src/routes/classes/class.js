@@ -32,17 +32,13 @@ export default function Class() {
     if (!data.success) {
       console.log("HERE");
       setStudents(false);
+    } else {
+      if (data.body) {
+        setStudents(data.body);
+      } else {
+        setStudents(false);
+      }
     }
-    else{
-        if (data.body){
-            setStudents(data.body);
-        }
-        else {
-            setStudents(false);
-        }
-    }
-    
-    
   }
 
   // get data for {location.state.name}
@@ -86,9 +82,8 @@ export default function Class() {
   function studentList() {
     if (students == undefined) {
       return "loading...";
-    }
-    else if (students == false){
-        return "No students in this class yet";
+    } else if (students == false) {
+      return "No students in this class yet";
     }
 
     return students.map((student, index) => {
@@ -131,9 +126,6 @@ export default function Class() {
       <div className="nav">
         <p className="logout">
           <Link to="/classes">Back to classes</Link>
-        </p>
-        <p className="logout">
-          <Link to="/logout">Logout</Link>
         </p>
       </div>
 
