@@ -12,6 +12,8 @@ export default function StudentForm(props) {
   const DATA_FIELDS = {
     name: "",
     dob: "",
+    email: "",
+    phone: "",
     gender: "Male",
     medical: "",
     contact: {
@@ -85,6 +87,20 @@ export default function StudentForm(props) {
               label="Full Name"
               dataKey="name"
               placeholder="Enter your full name..."
+              data={data}
+              update={updateData}
+            />
+            <InputField
+              label="Email"
+              dataKey="email"
+              placeholder="Enter your email address..."
+              data={data}
+              update={updateData}
+            />
+            <InputField
+              label="Phone Number"
+              dataKey="phone"
+              placeholder="Enter your phone number..."
               data={data}
               update={updateData}
             />
