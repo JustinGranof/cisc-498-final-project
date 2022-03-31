@@ -1,7 +1,9 @@
 const MongoClient = require("mongodb").MongoClient;
+require("dotenv").config();
+
 class mongoDbClass {
   constructor() {
-    this.client = new MongoClient("mongodb://localhost:27017");
+    this.client = new MongoClient(process.env.DATABASE_URL);
     this.db;
     this.connected = false;
   }
@@ -9,7 +11,7 @@ class mongoDbClass {
   connect() {
     try {
       this.client.connect();
-      this.db = this.client.db("test_db");
+      this.db = this.client.db(process.env.DATABASE_NAME);
       this.connected = true;
       return true;
     } catch {
