@@ -9,7 +9,6 @@ export default function Class() {
   const { tripID } = useParams();
   const navigate = useNavigate();
 
-  const [query, setQuery] = useState("");
   const [value, setValue] = useState("yes");
   const location = useLocation();
   const [search, setSearch] = useState("");
@@ -54,17 +53,14 @@ export default function Class() {
   // ]
 
   async function deleteStudent(id) {
-    let data = await request(
-      "POST",
-      "trip/student/delete",
-      { id: id },
-      true
-    );
+    let data = await request("POST", "trip/student/delete", { id: id }, true);
 
     if (!data.success) {
-        alert("Error deleting student.");
-        return;
+      alert("Error deleting student.");
+      return;
     }
+
+    getStudents();
   }
 
   async function getJoinLink() {
