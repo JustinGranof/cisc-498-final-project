@@ -17,6 +17,7 @@ import React, { useEffect, useState } from "react";
 import request from "./utils/Request";
 import Admins from "./routes/accounts/Admins";
 import StudentForm from "./routes/studentform/StudentForm";
+import NavBar from "./utils/NavBar";
 
 export function useAuthStatus() {
   const [auth, setAuth] = useState();
@@ -63,30 +64,36 @@ function App() {
   if (auth === undefined) return null;
 
   return (
-    <Router>
-      {!auth ? (
-        /* Login Flow */
-        <>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/reset-password" element={<Reset />} />
-            <Route path="*" element={<Navigate to="/login" />} />
-          </Routes>
-        </>
-      ) : (
-        /* App Flow */
-        <>
-          <Routes>
-            <Route path="/classes" element={<ClassList />} />
-            <Route path="/classes/:tripID" element={<Class />} />
-            <Route path="/classes/:tripID/:studentID" element={<Students />} />
-            <Route path="/form/:tripID" element={<StudentForm />} />
-            <Route path="/admins" element={<Admins />} />
-            <Route path="*" element={<Navigate to="/classes" />} />
-          </Routes>
-        </>
-      )}
-    </Router>
+    <>
+      <NavBar />
+      <Router>
+        {!auth ? (
+          /* Login Flow */
+          <>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/reset-password" element={<Reset />} />
+              <Route path="*" element={<Navigate to="/login" />} />
+            </Routes>
+          </>
+        ) : (
+          /* App Flow */
+          <>
+            <Routes>
+              <Route path="/classes" element={<ClassList />} />
+              <Route path="/classes/:tripID" element={<Class />} />
+              <Route
+                path="/classes/:tripID/:studentID"
+                element={<Students />}
+              />
+              <Route path="/form/:tripID" element={<StudentForm />} />
+              <Route path="/admins" element={<Admins />} />
+              <Route path="*" element={<Navigate to="/classes" />} />
+            </Routes>
+          </>
+        )}
+      </Router>
+    </>
   );
 }
 

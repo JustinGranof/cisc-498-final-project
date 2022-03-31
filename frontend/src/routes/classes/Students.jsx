@@ -77,7 +77,6 @@ function Students() {
 
   return (
     <>
-      <NavBar />
       <div className="main-div">
         <div className="grid-container">
           <div className="grid-item grid-item-1 one">
