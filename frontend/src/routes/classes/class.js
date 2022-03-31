@@ -76,11 +76,22 @@ export default function Class() {
     return;
   }
 
-  async function emailAll() {
+  async function emailAllEmergency() {
 
     var mailList = '';
     for (var i=0; i<students.length;i++){
         mailList += students[i].contact.email+";";
+    }
+
+    window.location.href = "mailto:"+mailList+"?subject=&body=";
+
+  }
+
+  async function emailAllStudents() {
+
+    var mailList = '';
+    for (var i=0; i<students.length;i++){
+        mailList += students[i].email+";";
     }
 
     window.location.href = "mailto:"+mailList+"?subject=&body=";
@@ -162,11 +173,19 @@ export default function Class() {
         </button>
         <button
           onClick={() => {
-            emailAll();
+            emailAllEmergency();
           }}
           className="join-btn"
         >
           Email All Emergency Contacts
+        </button>
+        <button
+          onClick={() => {
+            emailAllStudents();
+          }}
+          className="join-btn"
+        >
+          Email All Emergency Students
         </button>
         <div
           style={{
