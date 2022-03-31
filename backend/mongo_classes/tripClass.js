@@ -20,7 +20,6 @@ class Trips extends mongoDbClass {
             //These are the mandatory paramaters, if one is missing it will fail
             insertDoc = {
                 "name": doc.name,
-                "description": doc.description
             }
             //Can check for validitity (Like uniqueness) here
             //Some paramaters can be optionally added with if statements
@@ -28,7 +27,7 @@ class Trips extends mongoDbClass {
         } catch (error) {
             return {'error': true, 'body': 'Trip details missing.'};
         }
-
+        //insertDoc['Students'] = [];
         const result = TripsCollection.insertOne(insertDoc);
 
         return {'error': false, 'body': ''};

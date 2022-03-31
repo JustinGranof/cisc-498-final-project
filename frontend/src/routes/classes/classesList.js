@@ -37,13 +37,15 @@ export default function ClassList() {
 
   async function createClass() {
     if (!name) return;
-    let data = await request("POST", "class/create", { name: name }, true);
+    let data = await request("POST", "trip/create", { name: name }, true);
     // check for unique class name
-    if (data && data.success) {
+   // if (data && data.success) {
       setOpen(false);
-    } else {
-      setError(data.body);
-    }
+
+      getClasses();
+   // } else {
+     // setError(data.body);
+    //}
   }
 
   async function deleteClass(name) {

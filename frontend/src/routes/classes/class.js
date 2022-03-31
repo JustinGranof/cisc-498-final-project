@@ -30,12 +30,19 @@ export default function Class() {
     );
 
     if (!data.success) {
-      alert("Error getting class information.");
-      return;
+      console.log("HERE");
+      setStudents(false);
     }
-    console.log(data.body);
-
-    setStudents(data.body);
+    else{
+        if (data.body){
+            setStudents(data.body);
+        }
+        else {
+            setStudents(false);
+        }
+    }
+    
+    
   }
 
   // get data for {location.state.name}
@@ -78,8 +85,12 @@ export default function Class() {
 
   function studentList() {
     if (students == undefined) {
-      return "loading";
+      return "loading...";
     }
+    else if (students == false){
+        return "No students in this class yet";
+    }
+
     return students.map((student, index) => {
       const { _id, name, email, phone } = student;
 
