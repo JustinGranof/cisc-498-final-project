@@ -91,15 +91,18 @@
   align-items: center;
 }
 
-.medical {
+.medical-container {
   padding-left: 20px;
   margin-bottom: 20px;
   padding-right: 20px;
+  background-color: #f4f4f4;
+  border-radius: 15px;
+}
+
+.medical {
   display: grid;
   grid-template-columns: auto auto;
   row-gap: 20px;
-  background-color: #f4f4f4;
-  border-radius: 15px;
 }
 
 select {
