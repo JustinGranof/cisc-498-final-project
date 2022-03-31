@@ -77,14 +77,10 @@ function Students() {
 
   return (
     <>
-      <NavBar />
       <div className="main-div">
         <div className="grid-container">
           <div className="grid-item grid-item-1 one">
             <Link to={-1}>Back to Class #1</Link>
-          </div>
-          <div className="grid-item grid-item-2 two">
-            <a href="#">Logout</a>
           </div>
         </div>
         <div className="">

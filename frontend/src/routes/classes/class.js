@@ -32,17 +32,13 @@ export default function Class() {
     if (!data.success) {
       console.log("HERE");
       setStudents(false);
+    } else {
+      if (data.body) {
+        setStudents(data.body);
+      } else {
+        setStudents(false);
+      }
     }
-    else{
-        if (data.body){
-            setStudents(data.body);
-        }
-        else {
-            setStudents(false);
-        }
-    }
-    
-    
   }
 
   // get data for {location.state.name}
@@ -88,9 +84,8 @@ export default function Class() {
   function studentList() {
     if (students == undefined) {
       return "loading...";
-    }
-    else if (students == false){
-        return "No students in this class yet";
+    } else if (students == false) {
+      return "No students in this class yet";
     }
 
     return students.map((student, index) => {
@@ -98,16 +93,28 @@ export default function Class() {
 
       if (!name.includes(search.toLowerCase())) return;
       return (
-        <tr
-          onClick={() => {
-            navigate("/classes/" + tripID + "/" + _id);
-          }}
-          className="class-student-row"
-          key={_id}
-        >
-          <td>{name}</td>
-          <td>{email}</td>
-          <td>{phone}</td>
+        <tr className="class-student-row" key={_id}>
+          <td
+            onClick={() => {
+              navigate("/classes/" + tripID + "/" + _id);
+            }}
+          >
+            {name}
+          </td>
+          <td
+            onClick={() => {
+              navigate("/classes/" + tripID + "/" + _id);
+            }}
+          >
+            {email}
+          </td>
+          <td
+            onClick={() => {
+              navigate("/classes/" + tripID + "/" + _id);
+            }}
+          >
+            {phone}
+          </td>
           <td>
             <button
               onClick={() => {
@@ -133,9 +140,6 @@ export default function Class() {
       <div className="nav">
         <p className="logout">
           <Link to="/classes">Back to classes</Link>
-        </p>
-        <p className="logout">
-          <Link to="/logout">Logout</Link>
         </p>
       </div>
 
@@ -181,7 +185,6 @@ export default function Class() {
         </div>
       </div>
       {copied && <p>Copied to clipboard!</p>}
-
       <div className="search-container">
         <label htmlFor="search">Search</label>
         <br />

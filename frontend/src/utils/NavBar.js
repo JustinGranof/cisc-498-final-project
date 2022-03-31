@@ -1,6 +1,7 @@
 // nav bar
 import "./NavBar.css";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -14,11 +15,21 @@ const NavBar = () => {
     <nav>
       {isSuperAdmin == true && (
         <ul className="list">
-          <li className="items">Admins</li>
           <li className="items">
-            <a href="/classes">Classes</a>
+            <Link to="/admins">Admins</Link>
           </li>
-          <li className="items">Logout</li>
+          <li className="items">
+            <Link to="/classes">Classes</Link>
+          </li>
+          <li
+            onClick={() => {
+              window.localStorage.removeItem("user");
+              window.dispatchEvent(new Event("storage"));
+            }}
+            className="items"
+          >
+            Logout
+          </li>
         </ul>
       )}
 
