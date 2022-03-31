@@ -1,7 +1,7 @@
 import "./StudentOverview.css";
 import profile from "../../img/Profile.png";
 import edit from "../../img/edit.png";
-import update from "../../img/save.png";
+import updateImg from "../../img/save.png";
 import request from "../../utils/Request";
 
 import { useState, useEffect } from "react";
@@ -106,7 +106,7 @@ function Students() {
               <div className="flbox-1">
                 <button type="button" onClick={handleClick}>
                   <p className="heading-3">Save</p>
-                  <img className="img-2" src={update} height={23} />
+                  <img className="img-2" src={updateImg} height={23} />
                 </button>
               </div>
             )}
@@ -191,7 +191,7 @@ function Students() {
               <div className="flbox-1">
                 <button type="button" onClick={handleClick2}>
                   <p className="heading-3">Save</p>
-                  <img className="img-2" src={update} height={23} />
+                  <img className="img-2" src={updateImg} height={23} />
                 </button>
               </div>
             )}
