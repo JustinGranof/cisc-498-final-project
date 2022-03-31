@@ -181,6 +181,7 @@ function Students() {
                 rows={4}
                 disabled={isDisabled}
                 value={student.medical}
+                style={{ resize: "vertical" }}
                 onChange={(e) => update("medical", e.target.value)}
               />
             </div>

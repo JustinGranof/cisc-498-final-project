@@ -52,6 +52,9 @@ function authenticateToken(req, res, next) {
     // Get user
     let user = new User(email);
     await user.getUserByUsername();
+
+    if (!user.getUser().enabled) return res.sendStatus(403);
+
     // Add the user's authentication level to the request
     req.level = user.getUser().level;
 
